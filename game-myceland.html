@@ -82,7 +82,7 @@
     .wip-banner {
       border-top: 1px solid rgba(212, 162, 76, 0.25);
       background: rgba(212, 162, 76, 0.04);
-      padding: 40px 0;
+      padding: clamp(20px, 4vw, 40px) 0;
     }
     .wip-banner .inner {
       display: flex;
@@ -90,42 +90,48 @@
       gap: 20px;
       flex-wrap: wrap;
     }
+    @media (max-width: 600px) { .wip-banner .inner { gap: 12px; } }
     .wip-icon {
       font-family: var(--font-mono);
-      font-size: 28px;
+      font-size: clamp(20px, 3.8vw, 28px);
       color: var(--m-purple);
       opacity: 0.7;
       flex-shrink: 0;
     }
+    @media (max-width: 600px) { .wip-icon { font-size: clamp(18px, 5vw, 24px); } }
     .wip-text h3 {
       font-family: var(--font-mono);
-      font-size: 13px;
+      font-size: clamp(11px, 2.2vw, 13px);
       letter-spacing: 0.2em;
       text-transform: uppercase;
       color: var(--m-purple);
       margin-bottom: 6px;
     }
+    @media (max-width: 600px) { .wip-text h3 { margin-bottom: 4px; } }
     .wip-text p {
-      font-size: 14px;
+      font-size: clamp(12px, 2.8vw, 14px);
       color: var(--text-dim);
       max-width: 60ch;
+      line-height: clamp(1.35, 1.2 + 0.4vw, 1.5);
     }
+    @media (max-width: 600px) { .wip-text p { max-width: 100%; } }
     .wip-badge {
       display: inline-flex;
       align-items: center;
       gap: 6px;
       font-family: var(--font-mono);
-      font-size: 11px;
+      font-size: clamp(9px, 2vw, 11px);
       letter-spacing: 0.14em;
       text-transform: uppercase;
       color: var(--m-purple);
       border: 1px solid rgba(212, 162, 76, 0.4);
       background: rgba(212, 162, 76, 0.08);
-      padding: 6px 14px;
+      padding: clamp(4px, 1.2vw, 6px) clamp(10px, 2.5vw, 14px);
       border-radius: 100px;
       margin-left: auto;
       flex-shrink: 0;
     }
+    @media (max-width: 600px) { .wip-badge { margin-left: 0; margin-top: 8px; width: 100%; justify-content: center; } }
     .wip-badge .dot {
       width: 6px; height: 6px;
       border-radius: 50%;
@@ -136,7 +142,6 @@
       0%, 100% { opacity: 1; }
       50% { opacity: 0.3; }
     }
-    @media (max-width: 600px) { .wip-badge { margin-left: 0; } }
   </style>
 </head>
 <body class="noise">

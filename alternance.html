@@ -82,8 +82,11 @@
       gap: 48px;
     }
     @media (max-width: 900px) { .mission { grid-template-columns: 1fr; gap: 28px; padding: 28px; } }
+    @media (max-width: 600px) { .mission { padding: 20px; gap: 20px; } }
     .mission h2 { font-size: 32px; margin-bottom: 18px; }
+    @media (max-width: 600px) { .mission h2 { font-size: 22px; margin-bottom: 12px; } }
     .mission p { font-size: 16px; margin-bottom: 1em; }
+    @media (max-width: 600px) { .mission p { font-size: 14px; margin-bottom: 0.8em; } }
     .mission .diagram {
       border: 1px dashed var(--line-strong);
       border-radius: 6px;
@@ -92,17 +95,22 @@
       font-family: var(--font-mono);
       font-size: 12.5px;
       line-height: 1.75;
+      overflow-x: auto;
     }
-    .mission .diagram .row { display: flex; align-items: center; gap: 10px; padding: 4px 0; }
+    @media (max-width: 600px) { .mission .diagram { padding: 14px; font-size: 11px; line-height: 1.6; } }
+    .mission .diagram .row { display: flex; align-items: center; gap: 10px; padding: 4px 0; flex-wrap: wrap; }
+    @media (max-width: 600px) { .mission .diagram .row { gap: 6px; } }
     .mission .diagram .node {
       padding: 6px 12px;
       border: 1px solid var(--line-strong);
       border-radius: 4px;
       background: var(--bg-1);
       color: var(--text-hi);
+      white-space: nowrap;
     }
+    @media (max-width: 600px) { .mission .diagram .node { padding: 4px 8px; font-size: 10px; } }
     .mission .diagram .node.accent { border-color: var(--accent-line); color: var(--accent); background: var(--accent-soft); }
-    .mission .diagram .arr { color: var(--text-faint); }
+    .mission .diagram .arr { color: var(--text-faint); flex-shrink: 0; }
     .mission .diagram .label {
       color: var(--text-faint);
       text-transform: uppercase;
@@ -110,6 +118,7 @@
       font-size: 10px;
       margin: 12px 0 6px;
     }
+    @media (max-width: 600px) { .mission .diagram .label { font-size: 9px; margin: 8px 0 4px; } }
 
     /* Highlight grid */
     .highlights {
