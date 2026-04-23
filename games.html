@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Games — Alexis Martinho</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600&family=Space+Grotesk:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/styles.css" />
+  <style>
+    .games-grid { display: grid; grid-template-columns: 1fr; gap: 24px; }
+    .game-row {
+      display: grid;
+      grid-template-columns: 360px 1fr;
+      gap: 0;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
+      background: var(--bg-1);
+      transition: border-color 240ms ease, background 240ms ease;
+    }
+    @media (max-width: 900px) { .game-row { grid-template-columns: 1fr; } }
+    .game-row:hover { border-color: var(--accent-line); background: var(--bg-2); }
+
+    .game-row .left {
+      position: relative;
+      min-height: 260px;
+      border-right: 1px solid var(--line);
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    @media (max-width: 900px) { .game-row .left { border-right: 0; border-bottom: 1px solid var(--line); min-height: 200px; } }
+
+    .game-row .left img.logo {
+      /* Centered, contained, never overflows */
+      position: relative;
+      display: block;
+      max-width: 85%;
+      max-height: 80%;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      transition: transform 400ms ease, opacity 400ms ease;
+      opacity: 0.92;
+      z-index: 2;
+    }
+    .game-row:hover .left img.logo {
+      transform: scale(1.05);
+      opacity: 1;
+    }
+
+
+
+    .game-row .right {
+      padding: 28px 32px;
+      display: flex; flex-direction: column; gap: 14px;
+    }
+    .game-row .idx {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+    }
+    .game-row h3 {
+      font-size: clamp(28px, 3.2vw, 40px);
+      letter-spacing: -0.02em;
+    }
+    .game-row .meta {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--text-dim);
+      letter-spacing: 0.04em;
+    }
+    .game-row p { font-size: 15px; color: var(--text); margin: 4px 0 0; max-width: 58ch; }
+    .game-row .foot { margin-top: auto; display: flex; gap: 12px; flex-wrap: wrap; justify-content: space-between; align-items: end; }
+
+    .motif-label {
+      position: absolute; top: 14px; left: 16px;
+      font-family: var(--font-mono); font-size: 10px;
+      color: var(--text-faint); letter-spacing: 0.14em;
+      z-index: 2;
+    }
+
+    /*
+     * ─── IMAGE BLOCK BACKGROUND COLORS ───────────────────────────────────────
+     * Change these 4 hex values to adjust each game's image block background.
+     * All are dark-gray-to-black. Higher hex = lighter, lower hex = darker.
+     * Example: #1c1c1c is lighter than #0d0d0d.
+     * ─────────────────────────────────────────────────────────────────────────
+     */
+    .game-row .left.bg-gollum   { background: #0d1a0d; } /* dark green-black  */
+    .game-row .left.bg-onryo    { background: #1a0f0f; } /* rich red-black  */
+    .game-row .left.bg-wendogo  { background: #0a0f1a; } /* deeper blue-black  */
+    .game-row .left.bg-myceland { background: #0f1a0f; } /* dark green-brown  */
+
+    .motif-myceland .wip {
+      position: absolute; bottom: 12px; right: 12px;
+      font-family: var(--font-mono); font-size: 10px;
+      color: var(--warn); letter-spacing: 0.12em;
+      padding: 3px 8px;
+      border: 1px solid rgba(212, 162, 76, 0.4);
+      background: rgba(212, 162, 76, 0.08);
+      border-radius: 100px;
+      z-index: 2;
+    }
+  </style>
+</head>
+<body class="noise">
+  <div data-chrome="header"></div>
+
+  <main>
+    <section class="page-hero">
+      <div class="shell">
+        <div class="eyebrow reveal" style="margin-bottom: 20px"><span class="idx">/</span> 003 — GAMES</div>
+        <h1 class="reveal">Games.</h1>
+        <p class="lede reveal">
+          Four game projects across Unreal Engine 5 and Unity.
+          Two playable on itch.io, one shipped with voice-chat multiplayer,
+          one still in active development.
+        </p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="shell">
+        <div class="games-grid">
+
+          <a class="game-row reveal" href="game-gollumgo.html">
+            <div class="left bg-gollum">
+              <span class="motif-label">// 01</span>
+              <img class="logo" src="assets/img/gollumGO/gollumGO_logo.png" alt="GollumGO logo" />
+            </div>
+            <div class="right">
+              <div class="idx">01 / TACTICAL PUZZLE</div>
+              <h3>GollumGO</h3>
+              <div class="meta">Unreal Engine 5 · PC · Team project</div>
+              <p>A turn-based stealth puzzle. Use the ring strategically: invisible to orcs, but exposed to the Nazgûl. Plan every move carefully to reach the exit.</p>
+              <div class="foot">
+                <div class="badges">
+                  <span class="badge accent">UE5</span>
+                  <span class="badge">Blueprints</span>
+                  <span class="badge">Playable</span>
+                </div>
+                <span class="mono accent-text">→ open</span>
+              </div>
+            </div>
+          </a>
+
+          <a class="game-row reveal" href="game-onryo.html">
+            <div class="left bg-onryo">
+              <span class="motif-label">// 02</span>
+              <img class="logo" src="assets/img/onryo/onryo_logo.png" alt="Onryō logo" />
+            </div>
+            <div class="right">
+              <div class="idx">02 / ARENA FPS</div>
+              <h3>Onryō</h3>
+              <div class="meta">Unreal Engine 5 · C++ · PC · Team project</div>
+              <p>A vengeful spirit in feudal Japan. You start with no body — possess enemies to gain their weapons, stats, and inventory, then turn them against each other.</p>
+              <div class="foot">
+                <div class="badges">
+                  <span class="badge accent">UE5</span>
+                  <span class="badge">C++ 95.7%</span>
+                  <span class="badge">Playable</span>
+                </div>
+                <span class="mono accent-text">→ open</span>
+              </div>
+            </div>
+          </a>
+
+          <a class="game-row reveal" href="game-wendogo.html">
+            <div class="left bg-wendogo">
+              <span class="motif-label">// 03</span>
+              <img class="logo" src="assets/img/wendogo/wendogo_logo.png" alt="Wendogo logo" />
+            </div>
+            <div class="right">
+              <div class="idx">03 / SOCIAL DEDUCTION</div>
+              <h3>Wendogo</h3>
+              <div class="meta">Unity 6 · C# · Android · Team project</div>
+              <p>A hidden-role card game. Cooperate by day, commit hidden actions by night. Consequences only revealed at dawn — with real-time voice chat.</p>
+              <div class="foot">
+                <div class="badges">
+                  <span class="badge accent">Unity 6</span>
+                  <span class="badge">C# 78.6%</span>
+                  <span class="badge">Multiplayer</span>
+                  <span class="badge">Voice chat</span>
+                </div>
+                <span class="mono accent-text">→ open</span>
+              </div>
+            </div>
+          </a>
+
+          <a class="game-row reveal" href="game-myceland.html">
+            <div class="left bg-myceland motif-myceland">
+              <span class="motif-label">// 04</span>
+              <img class="logo" src="assets/img/myceland/myceland_logo.png" alt="Myceland logo" />
+              <div class="wip">WORK IN PROGRESS</div>
+            </div>
+            <div class="right">
+              <div class="idx">04 / PUZZLE NARRATIVE</div>
+              <h3>Myceland</h3>
+              <div class="meta">Unreal Engine 5 · C++ · PC · In development</div>
+              <p>Incarnate an avatar of a destroyed world. Revive the land by planting mushrooms and solving puzzles, woven into a narrative arc across levels.</p>
+              <div class="foot">
+                <div class="badges">
+                  <span class="badge accent">UE5</span>
+                  <span class="badge">C++ 93%</span>
+                  <span class="badge warn">In progress</span>
+                </div>
+                <span class="mono accent-text">→ open</span>
+              </div>
+            </div>
+          </a>
+
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div data-chrome="footer"></div>
+
+  <script src="assets/partials.js"></script>
+  <script src="assets/shared.js"></script>
+</body>
+</html>

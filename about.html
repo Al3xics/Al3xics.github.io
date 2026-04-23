@@ -1,0 +1,330 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>About — Alexis Martinho</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600&family=Space+Grotesk:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/styles.css" />
+  <style>
+    .about-hero {
+      padding: 72px 0 48px;
+      border-bottom: 1px solid var(--line);
+    }
+    .about-hero .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 56px;
+      align-items: start;
+    }
+    @media (max-width: 900px) { .about-hero .grid { grid-template-columns: 1fr; } }
+    .about-hero h1 {
+      font-size: clamp(48px, 7vw, 84px);
+      line-height: 1.0;
+      letter-spacing: -0.03em;
+    }
+    .about-hero h1 em { color: var(--accent); font-style: normal; }
+    .about-hero .lede {
+      font-size: 17px;
+      color: var(--text);
+      max-width: 56ch;
+    }
+    .about-hero .portrait {
+      aspect-ratio: 4/5;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background:
+        repeating-linear-gradient(135deg, rgba(255,255,255,0.02) 0 10px, transparent 10px 20px),
+        var(--bg-2);
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 10px;
+      color: var(--text-faint);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      letter-spacing: 0.16em;
+      text-align: center;
+    }
+    .about-hero .portrait .meta {
+      position: absolute; top: 12px; left: 14px;
+      font-family: var(--font-mono); font-size: 10px;
+      color: var(--text-faint); letter-spacing: 0.12em;
+    }
+    .about-hero .portrait .meta.br { top: auto; bottom: 12px; left: auto; right: 14px; }
+
+    .narrative {
+      display: grid;
+      grid-template-columns: 240px 1fr;
+      gap: 48px;
+      padding: var(--r-6) 0;
+    }
+    @media (max-width: 900px) { .narrative { grid-template-columns: 1fr; } }
+    .narrative h2 { font-size: 26px; margin-bottom: 14px; }
+    .narrative p { font-size: 16px; margin-bottom: 1.2em; }
+    .narrative .col-meta {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-faint);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      border-top: 1px solid var(--line);
+      padding-top: 14px;
+    }
+
+    /* Skills bar */
+    .skills { padding: var(--r-6) 0; border-top: 1px solid var(--line); }
+    .skills h2 { margin-bottom: 32px; }
+
+    .skill-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    @media (max-width: 900px) { .skill-grid { grid-template-columns: 1fr; } }
+    .skill-row {
+      display: grid;
+      grid-template-columns: 220px 1fr 80px;
+      gap: 20px;
+      padding: 16px 20px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: var(--bg-1);
+      align-items: center;
+      transition: border-color 200ms ease, background 200ms ease;
+    }
+    .skill-row:hover { border-color: var(--accent-line); background: var(--bg-2); }
+    .skill-row .name {
+      font-family: var(--font-display);
+      font-size: 15px;
+      color: var(--text-hi);
+    }
+    .skill-row .name .k {
+      display: block;
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      color: var(--text-faint);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-top: 2px;
+    }
+    .bar {
+      height: 6px;
+      background: var(--bg-3);
+      border-radius: 100px;
+      overflow: hidden;
+      position: relative;
+    }
+    .bar .fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent-2), var(--accent));
+      border-radius: 100px;
+      width: 0;
+      transition: width 1.4s cubic-bezier(.2,.6,.2,1);
+    }
+    .skill-row.in .fill { width: var(--w, 70%); }
+    .skill-row .val {
+      font-family: var(--font-mono);
+      font-size: 11.5px;
+      color: var(--text-dim);
+      text-align: right;
+      letter-spacing: 0.06em;
+    }
+
+    .philosophy {
+      padding: var(--r-6) 0;
+      border-top: 1px solid var(--line);
+    }
+    .philosophy .q {
+      font-family: var(--font-display);
+      font-size: clamp(26px, 3.4vw, 44px);
+      line-height: 1.25;
+      letter-spacing: -0.02em;
+      color: var(--text-hi);
+      max-width: 26ch;
+      text-wrap: balance;
+    }
+    .philosophy .q::before { content: '"'; color: var(--accent); margin-right: 4px; }
+    .philosophy .q::after { content: '"'; color: var(--accent); margin-left: 4px; }
+
+    .interests {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 36px;
+    }
+    @media (max-width: 900px) { .interests { grid-template-columns: 1fr; } }
+    .interest {
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: var(--bg-1);
+      padding: 22px;
+    }
+    .interest .num {
+      font-family: var(--font-mono); font-size: 11px;
+      color: var(--accent); letter-spacing: 0.14em; margin-bottom: 10px;
+    }
+    .interest h3 { font-size: 18px; margin-bottom: 8px; }
+    .interest p { font-size: 14px; color: var(--text); margin: 0; }
+  </style>
+</head>
+<body class="noise">
+  <div data-chrome="header"></div>
+
+  <main>
+    <section class="about-hero">
+      <div class="shell grid">
+        <div>
+          <div class="eyebrow reveal" style="margin-bottom: 20px"><span class="idx">/</span> 001 — ABOUT</div>
+          <h1 class="reveal">Hi, I'm Alexis.<br>I <em>build games</em>.<span class="cursor"></span></h1>
+          <p class="lede reveal" style="margin-top: 28px;">
+            Gameplay programmer, currently finishing a 2-year alternance.
+            My home turf is Unreal Engine 5 and C++ — but I'm always
+            reaching for the tool that fits the problem, whether that's
+            Unity, or writing a desktop app in C#.
+          </p>
+          <div class="hero-cta" style="display: flex; gap: 12px; margin-top: 28px; flex-wrap: wrap;">
+            <a class="btn btn-primary" href="contact.html">Get in touch <span class="arrow">→</span></a>
+            <a class="btn btn-ghost" href="https://github.com/Al3xics" target="_blank" rel="noopener">GitHub ↗</a>
+            <a class="btn btn-ghost" href="https://al3xics.itch.io/" target="_blank" rel="noopener">itch.io ↗</a>
+          </div>
+        </div>
+        <div class="portrait reveal">
+          <span class="meta">// portrait.png · 4:5</span>
+          <img src="assets/img/portrait-alexis.jpg" alt="Portrait of Alexis Martinho" style="width: 100%; height: auto; border-radius: 6px; object-fit: cover;">
+          <span class="meta br">1080 × 1350</span>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="shell narrative reveal">
+        <div class="col-meta">/ 01 — BACKGROUND</div>
+        <div>
+          <h2>The short version.</h2>
+          <p>
+            I'm a game development student in a 2-year alternance program —
+            alternating between school and professional work. On the company
+            side, I work as the sole Unreal Engine 5 expert on my team.
+            On the school side, I build games with classmates and on my own.
+          </p>
+          <p>
+            I'm especially drawn to <span class="hi">gameplay</span> and <span class="hi">UI</span> development,
+            but I also enjoy diving into low-level technical challenges when the opportunity arises.
+            What drives me most is learning — new tools, new engines, new paradigms.
+            If I don't know something, that's just a reason to figure it out.
+          </p>
+          <p>
+            I'm open to any game company — AAA, indie, or tech — as long as
+            I keep growing technically and making games.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="skills">
+      <div class="shell">
+        <div class="section-head reveal">
+          <div class="num">/02</div>
+          <h2>Stack &amp; skills</h2>
+          <div class="meta">self-assessed · relative confidence</div>
+        </div>
+
+        <div class="skill-grid">
+          <div class="skill-row reveal" style="--w: 95%"><div class="name">Unreal Engine 5<span class="k">ENGINE · PRIMARY</span></div><div class="bar"><div class="fill"></div></div><div class="val">95%</div></div>
+          <div class="skill-row reveal" style="--w: 90%"><div class="name">C++<span class="k">LANGUAGE</span></div><div class="bar"><div class="fill"></div></div><div class="val">90%</div></div>
+          <div class="skill-row reveal" style="--w: 90%"><div class="name">Blueprints<span class="k">UE VISUAL SCRIPTING</span></div><div class="bar"><div class="fill"></div></div><div class="val">90%</div></div>
+          <div class="skill-row reveal" style="--w: 85%"><div class="name">UMG<span class="k">UE UI FRAMEWORK</span></div><div class="bar"><div class="fill"></div></div><div class="val">85%</div></div>
+          <div class="skill-row reveal" style="--w: 70%"><div class="name">Unity<span class="k">ENGINE</span></div><div class="bar"><div class="fill"></div></div><div class="val">70%</div></div>
+          <div class="skill-row reveal" style="--w: 70%"><div class="name">C#<span class="k">LANGUAGE</span></div><div class="bar"><div class="fill"></div></div><div class="val">70%</div></div>
+          <div class="skill-row reveal" style="--w: 10%"><div class="name">gRPC<span class="k">RPC FRAMEWORK · BASICS</span></div><div class="bar"><div class="fill"></div></div><div class="val">10%</div></div>
+          <div class="skill-row reveal" style="--w: 85%"><div class="name">Git<span class="k">VERSION CONTROL</span></div><div class="bar"><div class="fill"></div></div><div class="val">85%</div></div>
+        </div>
+
+        <div style="margin-top: 40px;" class="reveal">
+          <div class="eyebrow" style="margin-bottom: 16px"><span class="idx">/</span> ALSO WORKING WITH</div>
+          <div class="badges">
+            <span class="badge">MetaHuman</span>
+            <span class="badge">.NET</span>
+            <span class="badge">UMG</span>
+            <span class="badge">WPF</span>
+            <span class="badge">JSON</span>
+            <span class="badge">MSI Installer</span>
+            <span class="badge">Multiplayer networking</span>
+            <span class="badge">Voice chat systems</span>
+            <span class="badge">Mobile development</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="philosophy">
+      <div class="shell">
+        <div class="section-head reveal">
+          <div class="num">/03</div>
+          <h2>What I care about</h2>
+          <div class="meta">values · approach</div>
+        </div>
+
+        <div class="q reveal">
+          I like it when the problem is hard, the solution is simple, and I have this "eureka" moment.
+        </div>
+
+        <div class="interests">
+          <div class="interest reveal">
+            <div class="num">▸ 01</div>
+            <h3>Systems over effects.</h3>
+            <p>The fun comes from the rules, not the polish. I try to get the system feeling right first, then decorate.</p>
+          </div>
+          <div class="interest reveal">
+            <div class="num">▸ 02</div>
+            <h3>Understand the layer below.</h3>
+            <p>Writing a Vulkan renderer taught me more about UE5 than UE5 ever did. Going low-level makes the high-level click.</p>
+          </div>
+          <div class="interest reveal">
+            <div class="num">▸ 03</div>
+            <h3>Always learning, on purpose.</h3>
+            <p>New engine, new paradigm, new language — if I keep doing the same thing, I stop getting better. So I keep picking up new things.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="shell">
+        <div class="card reveal" style="padding: 40px;">
+          <div style="display: flex; justify-content: space-between; gap: 24px; flex-wrap: wrap; align-items: center;">
+            <div>
+              <div class="eyebrow" style="margin-bottom: 12px;"><span class="idx">/</span> WHAT'S NEXT</div>
+              <h3 style="font-size: 24px;">Want to see the work?</h3>
+            </div>
+            <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+              <a class="btn btn-primary" href="games.html">Games <span class="arrow">→</span></a>
+              <a class="btn btn-ghost" href="projects.html">Personal projects <span class="arrow">→</span></a>
+              <a class="btn btn-ghost" href="alternance.html">Alternance <span class="arrow">→</span></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div data-chrome="footer"></div>
+
+  <script src="assets/partials.js"></script>
+  <script src="assets/shared.js"></script>
+  <script>
+    // Animate skill bars in
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.3 });
+    document.querySelectorAll('.skill-row').forEach(r => io.observe(r));
+  </script>
+</body>
+</html>

@@ -1,0 +1,512 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>GollumGO — Alexis Martinho</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600&family=Space+Grotesk:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/styles.css" />
+  <link rel="stylesheet" href="assets/game-page.css" />
+  <style>
+    :root {
+      --g-fog: #0E110D;
+      --g-gold: #E0C48C;
+      --g-moss: #556B4C;
+    }
+    body { background: #07080A; }
+
+    .gollum-hero {
+      background:
+        radial-gradient(1200px 600px at 80% 30%, rgba(224, 196, 140, 0.08), transparent 60%),
+        radial-gradient(900px 500px at 20% 90%, rgba(85, 107, 76, 0.12), transparent 60%),
+        linear-gradient(180deg, #090B08, #0B0D09 60%, #07080A);
+    }
+    .gollum-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image:
+        radial-gradient(rgba(224, 196, 140, 0.06) 1px, transparent 1.5px),
+        radial-gradient(rgba(85, 107, 76, 0.04) 1px, transparent 1.5px);
+      background-size: 14px 14px, 22px 22px;
+      background-position: 0 0, 7px 11px;
+      mask-image: radial-gradient(circle at 80% 50%, black, transparent 70%);
+      -webkit-mask-image: radial-gradient(circle at 80% 50%, black, transparent 70%);
+      opacity: 0.5;
+    }
+
+    .gollum-hero .ring-glow {
+      position: absolute;
+      right: -120px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 520px;
+      height: 520px;
+      border: 2px solid var(--g-gold);
+      border-radius: 50%;
+      box-shadow:
+        0 0 80px rgba(224, 196, 140, 0.25),
+        0 0 180px rgba(224, 196, 140, 0.12),
+        inset 0 0 60px rgba(224, 196, 140, 0.15);
+      opacity: 0.9;
+    }
+    .gollum-hero .ring-glow::before {
+      content: '';
+      position: absolute; inset: -20px;
+      border: 1px solid rgba(224, 196, 140, 0.3);
+      border-radius: 50%;
+    }
+    .gollum-hero .ring-glow::after {
+      content: '';
+      position: absolute; inset: -60px;
+      border: 1px dashed rgba(224, 196, 140, 0.18);
+      border-radius: 50%;
+    }
+    @media (max-width: 900px) { .gollum-hero .ring-glow { right: -240px; opacity: 0.3; } }
+
+    .gollum-hero h1 {
+      color: #EFE7D4;
+      text-shadow: 0 0 40px rgba(224, 196, 140, 0.15);
+    }
+    .gollum-hero h1 .accent { color: var(--g-gold); }
+
+    .gollum-hero .whisper {
+      position: absolute;
+      bottom: 30px; left: var(--gutter);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: rgba(224, 196, 140, 0.45);
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+    }
+
+    .badge.gold { color: var(--g-gold); border-color: rgba(224, 196, 140, 0.35); background: rgba(224, 196, 140, 0.06); }
+
+    /* Carousel */
+    .carousel-container { position: relative; margin-top: 24px; }
+    .carousel-wrapper { position: relative; overflow: hidden; border-radius: 8px; border: 1px solid var(--line); background: var(--bg-1); height: 480px; }
+    .carousel-slides { display: flex; transition: transform 400ms ease-out; height: 100%; }
+    .carousel-slide { flex: 0 0 100%; display: flex; align-items: center; justify-content: center; }
+    .carousel-slide img { max-width: 100%; max-height: 100%; width: auto; height: auto; display: block; object-fit: contain; cursor: pointer; }
+    .carousel-controls { display: flex; justify-content: space-between; align-items: center; margin-top: 16px; }
+    .carousel-nav { background: none; border: none; color: var(--text-dim); cursor: pointer; font-size: 20px; padding: 8px 12px; transition: color 200ms ease, opacity 200ms ease; }
+    .carousel-nav:hover:not(:disabled) { color: var(--g-gold); }
+    .carousel-nav:disabled { opacity: 0.25; cursor: not-allowed; }
+    .carousel-indicators { display: flex; gap: 8px; }
+    .carousel-dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(255, 255, 255, 0.3); border: none; cursor: pointer; transition: background 200ms ease; }
+    .carousel-dot.active { background: var(--g-gold); }
+    .carousel-counter { font-family: var(--font-mono); font-size: 12px; color: var(--text-dim); }
+    .carousel-slide img:hover { opacity: 0.95; }
+
+    /* Gallery (tech diagrams) */
+    .gallery-item {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
+      background: var(--bg-1);
+      cursor: pointer;
+      transition: border-color 200ms ease, transform 200ms ease;
+    }
+    .gallery-item:hover { border-color: var(--g-gold); transform: scale(1.01); }
+    .gallery-item img {
+      width: 100%;
+      height: auto;
+      display: block;
+      transition: opacity 200ms ease;
+    }
+    .gallery-item:hover img { opacity: 0.85; }
+
+    /* Video embed */
+    .video-embed {
+      position: relative;
+      width: 100%;
+      padding-bottom: 56.25%;
+      height: 0;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      margin-top: 16px;
+    }
+    .video-embed iframe {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      border: 0;
+    }
+    .videos-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-top: 10px;
+    }
+    @media (max-width: 800px) { .videos-grid { grid-template-columns: 1fr; } }
+    .video-label {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-dim);
+      letter-spacing: 0.1em;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+    }
+
+    /* Lightbox */
+    .lightbox { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.92); z-index: 1000; align-items: center; justify-content: center; }
+    .lightbox.active { display: flex; }
+    .lightbox-content { position: relative; max-width: 95vw; max-height: 95vh; }
+    .lightbox-img { width: 100%; height: auto; max-height: 90vh; object-fit: contain; border-radius: 8px; }
+    .lightbox-close { position: absolute; top: -40px; right: 0; font-size: 32px; color: white; cursor: pointer; background: none; border: none; padding: 0; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; }
+    .lightbox-close:hover { color: var(--g-gold); }
+  </style>
+</head>
+<body class="noise">
+  <div data-chrome="header"></div>
+
+  <main>
+    <section class="game-hero gollum-hero">
+      <div class="ring-glow" aria-hidden="true"></div>
+      <div class="shell">
+        <div class="eyebrow-line reveal">
+          <span class="eyebrow"><span class="idx">/</span> GAME 01 / 04</span>
+          <span class="status"><span class="pulse" style="background: var(--g-gold); box-shadow: 0 0 0 0 rgba(224, 196, 140, 0.5);"></span> Playable on itch.io</span>
+        </div>
+        <h1 class="reveal">Gollum<span class="accent">GO</span>.</h1>
+        <p class="lede reveal">
+          A tactical puzzle game set in the Dead Marshes. You play as Gollum.
+          Use the One Ring strategically — it hides you from Orcs, but exposes
+          you to the Nazgûl. Plan every move carefully to reach the exit.
+        </p>
+        <div class="cta-row reveal">
+          <a class="btn btn-primary" href="https://al3xics.itch.io/gollumgo" target="_blank" rel="noopener">
+            Play on itch.io <span class="arrow">↗</span>
+          </a>
+          <a class="btn btn-ghost" href="https://github.com/Al3xics/GollumGO" target="_blank" rel="noopener">GitHub ↗</a>
+          <a class="btn btn-ghost" href="#trailers">Watch trailer ↓</a>
+        </div>
+        <div class="specs reveal">
+          <div class="spec"><div class="k">Engine</div><div class="v">Unreal Engine 5</div></div>
+          <div class="spec"><div class="k">Platform</div><div class="v">PC</div></div>
+          <div class="spec"><div class="k">Genre</div><div class="v">Tactical puzzle</div></div>
+          <div class="spec"><div class="k">Team</div><div class="v">6 people · 3 months</div></div>
+        </div>
+      </div>
+      <div class="whisper">// the precious · turn-based · stealth · risk-reward</div>
+    </section>
+
+    <section class="game-body">
+      <div class="shell grid">
+        <div class="col-meta reveal">/ 01 — OVERVIEW</div>
+        <div class="reveal">
+          <h2>A puzzle of visibility.</h2>
+          <p>
+            Every level is a node graph. Orcs patrol fixed paths; Nazgûl hunt anything wearing the Ring.
+            The same move is safe or fatal depending on who's looking — and what's on your finger.
+            The tension comes from that asymmetry: the Ring is your only tool and your biggest threat.
+          </p>
+          <p>
+            Built over 3 months by a team of 6, entirely in Unreal Engine 5 with Blueprints.
+            I was responsible for the ring mechanic and enemy AI — including the Orc and Nazgûl
+            behavior systems — as well as the node movement logic and the node graph construction
+            (defining which nodes connect to which).
+          </p>
+          <div class="badges" style="margin-top: 20px;">
+            <span class="badge gold">UE5</span>
+            <span class="badge">Blueprints</span>
+            <span class="badge">Turn-based</span>
+            <span class="badge">Node graph</span>
+            <span class="badge">AI state machine</span>
+            <span class="badge">DataTables</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="game-body" id="screenshots">
+      <div class="shell grid">
+        <div class="col-meta reveal">/ 02 — SCREENSHOTS</div>
+        <div class="reveal">
+          <h2>From the marshes.</h2>
+          <div class="carousel-container">
+            <div class="carousel-wrapper">
+              <div class="carousel-slides" id="carouselSlides">
+                <div class="carousel-slide" data-full="assets/img/gollumGO/gollumGO_home-page.png" data-alt="GollumGO — Home Page">
+                  <img src="assets/img/gollumGO/gollumGO_home-page.png" alt="GollumGO — Home Page" loading="lazy" />
+                </div>
+                <div class="carousel-slide" data-full="assets/img/gollumGO/gollumGO_settings.png" data-alt="GollumGO — Settings">
+                  <img src="assets/img/gollumGO/gollumGO_settings.png" alt="GollumGO — Settings" loading="lazy" />
+                </div>
+                <div class="carousel-slide" data-full="assets/img/gollumGO/gollumGO_levels.png" data-alt="GollumGO — Level Select">
+                  <img src="assets/img/gollumGO/gollumGO_levels.png" alt="GollumGO — Level Select" loading="lazy" />
+                </div>
+                <div class="carousel-slide" data-full="assets/img/gollumGO/gollumGO_pause-menu.png" data-alt="GollumGO — Pause Menu">
+                  <img src="assets/img/gollumGO/gollumGO_pause-menu.png" alt="GollumGO — Pause Menu" loading="lazy" />
+                </div>
+                <div class="carousel-slide" data-full="assets/img/gollumGO/gollumGO_level-easy.png" data-alt="GollumGO — Easy Level">
+                  <img src="assets/img/gollumGO/gollumGO_level-easy.png" alt="GollumGO — Easy Level" loading="lazy" />
+                </div>
+                <div class="carousel-slide" data-full="assets/img/gollumGO/gollumGO_level-medium.png" data-alt="GollumGO — Medium Level">
+                  <img src="assets/img/gollumGO/gollumGO_level-medium.png" alt="GollumGO — Medium Level" loading="lazy" />
+                </div>
+                <div class="carousel-slide" data-full="assets/img/gollumGO/gollumGO_level-hard.png" data-alt="GollumGO — Hard Level">
+                  <img src="assets/img/gollumGO/gollumGO_level-hard.png" alt="GollumGO — Hard Level" loading="lazy" />
+                </div>
+              </div>
+            </div>
+            <div class="carousel-controls">
+              <button class="carousel-nav" id="prevBtn" onclick="changeSlide(-1)">← Previous</button>
+              <div class="carousel-indicators" id="carouselDots"></div>
+              <button class="carousel-nav" id="nextBtn" onclick="changeSlide(1)">Next →</button>
+            </div>
+            <div style="text-align: center; margin-top: 12px;">
+              <span class="carousel-counter"><span id="currentSlide">1</span> / <span id="totalSlides">7</span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="game-body" id="trailers">
+      <div class="shell grid">
+        <div class="col-meta reveal">/ 03 — TRAILERS</div>
+        <div class="reveal">
+          <h2>See it in motion.</h2>
+          <div class="videos-grid">
+            <div>
+              <div class="video-label">// Trailer — gameplay reveal</div>
+              <div class="video-embed">
+                <iframe src="https://www.youtube.com/embed/pxMsG4oZtjA" title="GollumGO Trailer" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+              </div>
+            </div>
+            <div>
+              <div class="video-label">// Teaser — with gameplay</div>
+              <div class="video-embed">
+                <iframe src="https://www.youtube.com/embed/R9TGvu0C7nc" title="GollumGO Teaser" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="game-body">
+      <div class="shell grid">
+        <div class="col-meta reveal">/ 04 — ARCHITECTURE</div>
+        <div class="reveal">
+          <h2>How it's built.</h2>
+
+          <h3 style="margin-top: 32px; font-size: 18px; color: var(--g-gold);">Reverse engineering as a starting point</h3>
+          <p>
+            GollumGO was inspired by Hitman GO. Before writing a single line of Blueprint,
+            we reverse-engineered its logic — studying how the turn-based grid system works,
+            what rules govern movement, and how enemy behavior is sequenced. That analysis
+            shaped every architectural decision that followed.
+          </p>
+
+          <h3 style="margin-top: 28px; font-size: 18px; color: var(--g-gold);">Global game flow — GameMode as state machine</h3>
+          <p>
+            The <strong>GameMode</strong> acts as the central authority for all game logic.
+            Because it is instantiated per level, it fits naturally into Unreal's lifecycle
+            and avoids the pitfalls of global references. It drives the main state machine,
+            cycling through <code>PlayerTurn</code>, <code>EnemyTurn</code>, <code>TurnEnd</code>,
+            <code>PlayerVictory</code>, and <code>PlayerDefeat</code>.
+          </p>
+
+          <!-- Diagram 1: global game loop -->
+          <div class="gallery-item reveal" style="margin-top: 20px; background: #f8f8f8;"
+               data-full="assets/img/gollumGO/gollumGO_tech_1.png" data-alt="GollumGO — Game loop state machine">
+            <img src="assets/img/gollumGO/gollumGO_tech_1.png"
+                 alt="GollumGO — Game loop state machine" loading="lazy"
+                 style="width:100%; height:auto; display:block;" />
+          </div>
+          <p style="font-family: var(--font-mono); font-size: 11px; color: var(--text-faint); margin-top: 8px; letter-spacing: 0.08em;">
+            // Global game loop — PlayerTurn → EnemyTurn → win/death check
+          </p>
+
+          <h3 style="margin-top: 32px; font-size: 18px; color: var(--g-gold);">Layered state machines — player turn logic</h3>
+          <p>
+            Each actor has its own local state machine that plugs into the global one.
+            During the player's turn, every input is evaluated through two sub-systems:
+            the <strong>Ring system</strong> and the <strong>Movement system</strong>.
+          </p>
+          <p>
+            The Ring checks whether it was activated this turn, then resolves Nazgûl
+            visibility and Orc proximity. Movement validates whether the clicked node
+            is connected to the current one — and whether a Shelob node (teleport) is
+            involved — before committing the player to a new position.
+            I designed and implemented both of these sub-systems.
+          </p>
+
+          <!-- Diagram 2: player turn — ring + movement -->
+          <div class="gallery-item reveal" style="margin-top: 20px; background: #f8f8f8;"
+               data-full="assets/img/gollumGO/gollumGO_tech_2.png" data-alt="GollumGO — Player turn: Ring and Movement">
+            <img src="assets/img/gollumGO/gollumGO_tech_2.png"
+                 alt="GollumGO — Player turn: Ring and Movement" loading="lazy"
+                 style="width:100%; height:auto; display:block;" />
+          </div>
+          <p style="font-family: var(--font-mono); font-size: 11px; color: var(--text-faint); margin-top: 8px; letter-spacing: 0.08em;">
+            // Player turn sub-systems — Ring (left) and node Movement (right)
+          </p>
+
+          <h3 style="margin-top: 32px; font-size: 18px; color: var(--g-gold);">Enemy AI — Orc & Nazgûl behavior</h3>
+          <p>
+            Enemies share a simplified behavior model driven by a fixed enum:
+            <code>Static</code>, <code>Chase</code>, <code>Attack</code>.
+            This keeps logic consistent across enemy types while allowing
+            each to respond differently to the same game state.
+          </p>
+          <p>
+            The <strong>Orc</strong> chases when the Ring is disabled and the player is
+            within two forward nodes. The <strong>Nazgûl</strong> activates only when the Ring
+            is enabled — making the Ring a double-edged mechanic rather than a simple toggle.
+            I built the full enemy turn logic, including the state switching and kill conditions.
+          </p>
+
+          <!-- Diagram 3: enemy turn logic -->
+          <div class="gallery-item reveal" style="margin-top: 20px; background: #f8f8f8;"
+               data-full="assets/img/gollumGO/gollumGO_tech_3.png" data-alt="GollumGO — Enemy turn: Orc and Nazgûl AI">
+            <img src="assets/img/gollumGO/gollumGO_tech_3.png"
+                 alt="GollumGO — Enemy turn: Orc and Nazgûl AI" loading="lazy"
+                 style="width:100%; height:auto; display:block;" />
+          </div>
+          <p style="font-family: var(--font-mono); font-size: 11px; color: var(--text-faint); margin-top: 8px; letter-spacing: 0.08em;">
+            // Enemy turn — Orc (top) and Nazgûl (bottom) behavior trees per state
+          </p>
+
+          <h3 style="margin-top: 32px; font-size: 18px; color: var(--g-gold);">Node graph via DataTables</h3>
+          <p>
+            Level structure and navigation are entirely data-driven using Unreal
+            <strong>DataTables</strong>. Each node's connections are explicitly defined
+            in a table — a node can only link to another if that connection exists in the data.
+            I wrote the system that reads this data to build valid movement paths at runtime.
+          </p>
+          <p>
+            This approach let designers build and tweak levels without touching code,
+            while keeping the movement logic clean on the programmer side.
+            It doesn't scale infinitely, but for GollumGO's scope it was efficient,
+            readable, and designer-friendly.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="game-body">
+      <div class="shell grid">
+        <div class="col-meta reveal">/ 05 — TECH HIGHLIGHTS</div>
+        <div>
+          <h2 class="reveal">Under the hood.</h2>
+          <ul class="tech-list reveal">
+            <li><span class="n">01</span><span class="t">UE5 Blueprints — full gameplay architecture, no C++ required for this scope.</span></li>
+            <li><span class="n">02</span><span class="t">GameMode as central state machine — PlayerTurn / EnemyTurn / Victory / Defeat.</span></li>
+            <li><span class="n">03</span><span class="t">Layered local state machines per actor, plugged into the global game flow.</span></li>
+            <li><span class="n">04</span><span class="t">Ring system — asymmetric visibility: hides from Orcs, exposes to Nazgûl.</span></li>
+            <li><span class="n">05</span><span class="t">Node movement — connection-validated traversal built from DataTable data.</span></li>
+            <li><span class="n">06</span><span class="t">Enemy AI — shared Static / Chase / Attack enum with per-type resolution logic.</span></li>
+            <li><span class="n">07</span><span class="t">DataTable-driven level graph — designer-editable, code-readable node connections.</span></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="shell">
+        <div class="links-block">
+          <a href="https://al3xics.itch.io/gollumgo" target="_blank" rel="noopener">
+            <div class="k">↗ PLAY</div>
+            <div class="v">itch.io / gollumgo</div>
+          </a>
+          <a href="https://github.com/Al3xics/GollumGO" target="_blank" rel="noopener">
+            <div class="k">↗ SOURCE</div>
+            <div class="v">github.com / Al3xics / GollumGO</div>
+          </a>
+          <a href="https://www.youtube.com/watch?v=pxMsG4oZtjA" target="_blank" rel="noopener">
+            <div class="k">↗ VIDEO</div>
+            <div class="v">YouTube trailer</div>
+          </a>
+        </div>
+        <div class="next-prev">
+          <a href="games.html">
+            <div class="k">← ALL GAMES</div>
+            <div class="v">Back to index</div>
+          </a>
+          <a href="game-onryo.html" class="right">
+            <div class="k">NEXT · 02 →</div>
+            <div class="v">Onryō</div>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div data-chrome="footer"></div>
+
+  <!-- Lightbox -->
+  <div id="lightbox" class="lightbox">
+    <div class="lightbox-content">
+      <button class="lightbox-close" onclick="closeLightbox()">&times;</button>
+      <img id="lightbox-img" class="lightbox-img" src="" alt="" />
+    </div>
+  </div>
+
+  <script src="assets/partials.js"></script>
+  <script src="assets/shared.js"></script>
+  <script>
+    // Carousel
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.carousel-slide');
+    const totalSlides = slides.length;
+    const carouselSlides = document.getElementById('carouselSlides');
+    const dotsContainer = document.getElementById('carouselDots');
+
+    for (let i = 0; i < totalSlides; i++) {
+      const dot = document.createElement('button');
+      dot.className = `carousel-dot ${i === 0 ? 'active' : ''}`;
+      dot.onclick = () => goToSlide(i);
+      dotsContainer.appendChild(dot);
+    }
+    document.getElementById('totalSlides').textContent = totalSlides;
+    updateCarousel();
+
+    function updateCarousel() {
+      carouselSlides.style.transform = `translateX(-${currentSlide * 100}%)`;
+      document.querySelectorAll('.carousel-dot').forEach((dot, index) => {
+        dot.classList.toggle('active', index === currentSlide);
+      });
+      document.getElementById('currentSlide').textContent = currentSlide + 1;
+      document.getElementById('prevBtn').disabled = currentSlide === 0;
+      document.getElementById('nextBtn').disabled = currentSlide === totalSlides - 1;
+    }
+
+    function changeSlide(n) {
+      currentSlide = Math.max(0, Math.min(currentSlide + n, totalSlides - 1));
+      updateCarousel();
+    }
+
+    function goToSlide(n) {
+      currentSlide = n;
+      updateCarousel();
+    }
+
+    // Lightbox
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+    document.querySelectorAll('.carousel-slide img').forEach(img => {
+      img.addEventListener('click', () => {
+        const slide = img.closest('.carousel-slide');
+        lightboxImg.src = slide.dataset.full;
+        lightboxImg.alt = slide.dataset.alt || '';
+        lightbox.classList.add('active');
+      });
+    });
+    document.querySelectorAll('.gallery-item').forEach(item => {
+      item.addEventListener('click', () => {
+        lightboxImg.src = item.dataset.full;
+        lightboxImg.alt = item.dataset.alt || '';
+        lightbox.classList.add('active');
+      });
+    });
+    function closeLightbox() { lightbox.classList.remove('active'); }
+    lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+  </script>
+</body>
+</html>

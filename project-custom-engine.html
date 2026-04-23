@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Custom Engine — Alexis Martinho</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600&family=Space+Grotesk:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/styles.css" />
+  <link rel="stylesheet" href="assets/game-page.css" />
+  <style>
+    body { background: #06080C; }
+    .ce-hero {
+      background:
+        radial-gradient(900px 500px at 80% 40%, rgba(107, 138, 255, 0.1), transparent 60%),
+        linear-gradient(180deg, #06080C, #08101A);
+      position: relative;
+    }
+    .ce-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(90deg, transparent 0 49px, rgba(107, 138, 255, 0.06) 49px 50px),
+        linear-gradient(180deg, transparent 0 49px, rgba(107, 138, 255, 0.06) 49px 50px);
+      background-size: 50px 50px;
+      mask-image: radial-gradient(circle at 75% 50%, black, transparent 70%);
+      -webkit-mask-image: radial-gradient(circle at 75% 50%, black, transparent 70%);
+      opacity: 0.8;
+    }
+    .ce-hero .wireframe {
+      position: absolute;
+      right: 5%; top: 50%;
+      transform: translateY(-50%) rotateX(55deg) rotateZ(25deg);
+      width: 300px; height: 300px;
+      border: 1px solid rgba(107, 138, 255, 0.4);
+      background-image:
+        linear-gradient(90deg, transparent 0 29px, rgba(107, 138, 255, 0.25) 29px 30px),
+        linear-gradient(180deg, transparent 0 29px, rgba(107, 138, 255, 0.25) 29px 30px);
+      background-size: 30px 30px;
+    }
+    @media (max-width: 900px) { .ce-hero .wireframe { display: none; } }
+
+    .ce-hero h1 { color: #E8EDFA; }
+    .ce-hero h1 .accent { color: oklch(0.72 0.15 258); }
+
+    .code-block {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      line-height: 1.7;
+      background: var(--bg-1);
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      padding: 20px 22px;
+      color: var(--text);
+      overflow-x: auto;
+    }
+    .code-block .c { color: var(--text-faint); }
+    .code-block .k { color: oklch(0.72 0.15 258); }
+    .code-block .s { color: #8FD070; }
+    .code-block .n { color: #E5B557; }
+  </style>
+</head>
+<body class="noise">
+  <div data-chrome="header"></div>
+
+  <main>
+    <section class="game-hero ce-hero">
+      <div class="wireframe" aria-hidden="true"></div>
+      <div class="shell">
+        <div class="eyebrow-line reveal">
+          <span class="eyebrow"><span class="idx">/</span> PERSONAL 01 / 02</span>
+          <span class="status"><span class="pulse"></span> Source on GitHub</span>
+        </div>
+        <h1 class="reveal">Custom<span class="accent">&nbsp;Engine</span>.</h1>
+        <p class="lede reveal">
+          A basic 3D rendering engine built from scratch in Vulkan and C++.
+          Moveable camera with full 6-axis control and rotation, a transform
+          component system, and GLSL shader compilation via glslc.
+          Every function documented inline.
+        </p>
+        <div class="cta-row reveal">
+          <a class="btn btn-primary" href="https://github.com/Al3xics/Custom-Engine" target="_blank" rel="noopener">GitHub ↗</a>
+        </div>
+
+        <div class="specs reveal">
+          <div class="spec"><div class="k">Stack</div><div class="v">Vulkan · C++</div></div>
+          <div class="spec"><div class="k">Type</div><div class="v">3D renderer</div></div>
+          <div class="spec"><div class="k">Scope</div><div class="v">From scratch</div></div>
+          <div class="spec"><div class="k">Solo</div><div class="v">Personal project</div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="game-body">
+      <div class="shell grid">
+        <div class="col-meta reveal">/ 01 — WHY</div>
+        <div class="reveal">
+          <h2>"Unreal does it" wasn't enough.</h2>
+          <p>
+            I love Unreal. I live in Unreal. But I wanted to understand
+            what it's actually doing when it renders a frame. So I wrote my
+            own renderer, from scratch, in Vulkan — a modern low-level graphics API.
+          </p>
+          <p>
+            The scope is deliberately narrow: a working 3D pipeline, a camera
+            I can move around, a transform system, and the ability to load and
+            run shaders.
+          </p>
+          <div class="badges" style="margin-top: 20px;">
+            <span class="badge accent">Vulkan</span>
+            <span class="badge">C++</span>
+            <span class="badge">GLSL</span>
+            <span class="badge">glslc</span>
+            <span class="badge">Low-level</span>
+          </div>
+
+          <div style="margin-top: 32px;">
+            <div class="eyebrow" style="margin-bottom: 10px"><span class="idx">▸</span> LANGUAGE BREAKDOWN</div>
+            <div style="display: flex; gap: 1px; margin-top: 6px; border: 1px solid var(--line); border-radius: 4px; overflow: hidden; height: 10px;">
+              <div style="width: 32.9%; background: oklch(0.72 0.15 258); height: 100%;"></div>
+              <div style="width: 60.7%; background: var(--warn); height: 100%;"></div>
+              <div style="width: 3.9%; background: #8FD070; height: 100%;"></div>
+              <div style="width: 2.5%; background: #d070c3; height: 100%;"></div>
+            </div>
+            <div style="display: flex; flex-wrap: wrap; gap: 16px; margin-top: 8px; font-family: var(--font-mono); font-size: 11px; color: var(--text-dim);">
+              <span><span style="display:inline-block; width: 10px; height: 10px; border-radius: 2px; background: oklch(0.72 0.15 258); margin-right: 6px;"></span>C++ 32.9%</span>
+              <span><span style="display:inline-block; width: 10px; height: 10px; border-radius: 2px; background: var(--warn); margin-right: 6px;"></span>HTML 60.7% <span class="faint">(inline doc generation)</span></span>
+              <span><span style="display:inline-block; width: 10px; height: 10px; border-radius: 2px; background: #8FD070; margin-right: 6px;"></span>C 3.9%</span>
+              <span><span style="display:inline-block; width: 10px; height: 10px; border-radius: 2px; background: #d070c3; margin-right: 6px;"></span>Other 2.5%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="game-body">
+      <div class="shell grid">
+        <div class="col-meta reveal">/ 02 — ARCHITECTURE</div>
+        <div class="reveal">
+          <h2>A peek at the surface.</h2>
+          <pre class="code-block"><span class="c">// main.cpp — minimal frame loop</span>
+<span class="k">auto</span> gfx = VulkanContext::create(window);
+<span class="k">auto</span> pipeline = Pipeline::fromShaders(
+    <span class="s">"shaders/default.vert.spv"</span>,
+    <span class="s">"shaders/default.frag.spv"</span>
+);
+
+Camera camera;
+camera.setPosition({<span class="n">0</span>, <span class="n">0</span>, <span class="n">5</span>});
+
+<span class="k">while</span> (!window.shouldClose()) {
+    camera.update(deltaTime);         <span class="c">// 6-axis controls</span>
+    transforms.tick(deltaTime);       <span class="c">// transform components</span>
+    gfx.drawFrame(pipeline, camera, scene);
+}</pre>
+        </div>
+      </div>
+    </section>
+
+    <section class="game-body">
+      <div class="shell grid">
+        <div class="col-meta reveal">/ 03 — TECH HIGHLIGHTS</div>
+        <div>
+          <h2 class="reveal">Under the hood.</h2>
+          <ul class="tech-list reveal">
+            <li><span class="n">01</span><span class="t">Vulkan initialization — instance, physical &amp; logical device, queues.</span></li>
+            <li><span class="n">02</span><span class="t">3D rendering pipeline — vertex / fragment shaders, descriptor sets.</span></li>
+            <li><span class="n">03</span><span class="t">Custom camera — 6-axis movement with full rotation.</span></li>
+            <li><span class="n">04</span><span class="t">Transform component system — composable scene objects.</span></li>
+            <li><span class="n">05</span><span class="t">GLSL shader compilation via glslc — runtime-friendly shader pipe.</span></li>
+            <li><span class="n">06</span><span class="t">Inline documentation — every function explained in code.</span></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="shell">
+        <div class="links-block">
+          <a href="https://github.com/Al3xics/Custom-Engine" target="_blank" rel="noopener">
+            <div class="k">↗ SOURCE</div>
+            <div class="v">github.com / Al3xics / Custom-Engine</div>
+          </a>
+          <a href="projects.html">
+            <div class="k">↗ INDEX</div>
+            <div class="v">All personal projects</div>
+          </a>
+          <a href="contact.html">
+            <div class="k">↗ CONTACT</div>
+            <div class="v">Questions?</div>
+          </a>
+        </div>
+
+        <div class="next-prev">
+          <a href="projects.html">
+            <div class="k">← ALL PROJECTS</div>
+            <div class="v">Back to index</div>
+          </a>
+          <a href="project-kanji.html" class="right">
+            <div class="k">NEXT · 02 →</div>
+            <div class="v">Japanese Kanji App</div>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div data-chrome="footer"></div>
+  <script src="assets/partials.js"></script>
+  <script src="assets/shared.js"></script>
+</body>
+</html>

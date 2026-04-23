@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Contact — Alexis Martinho</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600&family=Space+Grotesk:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/styles.css" />
+  <style>
+    .c-hero { padding: 100px 0 48px; }
+    .c-hero h1 { font-size: clamp(52px, 8vw, 120px); line-height: 0.95; letter-spacing: -0.03em; }
+    .c-hero h1 em { color: var(--accent); font-style: normal; }
+    .c-hero .lede { margin-top: 30px; max-width: 56ch; font-size: 18px; color: var(--text); }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 48px;
+      padding: var(--r-6) 0 var(--r-7);
+    }
+    @media (max-width: 900px) { .contact-grid { grid-template-columns: 1fr; } }
+
+    .contact-methods { display: flex; flex-direction: column; gap: 12px; }
+    .contact-methods a {
+      display: grid;
+      grid-template-columns: 60px 1fr auto;
+      align-items: center;
+      gap: 20px;
+      padding: 22px 26px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--bg-1);
+      transition: all 220ms ease;
+    }
+    .contact-methods a:hover {
+      border-color: var(--accent-line);
+      background: var(--bg-2);
+      transform: translateX(4px);
+    }
+    .contact-methods .icon {
+      width: 44px; height: 44px; border-radius: 50%;
+      background: var(--bg-2); border: 1px solid var(--line);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--accent); font-family: var(--font-mono); font-size: 16px;
+    }
+    .contact-methods a:hover .icon {
+      background: var(--accent-soft);
+      border-color: var(--accent-line);
+    }
+    .contact-methods .meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .contact-methods .meta .k {
+      font-family: var(--font-mono); font-size: 10.5px;
+      color: var(--text-faint); text-transform: uppercase; letter-spacing: 0.14em;
+    }
+    .contact-methods .meta .v {
+      font-family: var(--font-display); font-size: 16px;
+      color: var(--text-hi); margin-top: 2px;
+    }
+    .contact-methods .arrow {
+      font-family: var(--font-mono); font-size: 14px; color: var(--text-faint);
+    }
+    .contact-methods a:hover .arrow { color: var(--accent); }
+
+    .side-panel {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--bg-1);
+      padding: 28px;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      line-height: 1.75;
+      align-self: start;
+      position: sticky;
+      top: 100px;
+    }
+    .side-panel h3 {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      margin: 0 0 14px;
+    }
+    .side-panel .msg {
+      color: var(--text);
+      border-left: 2px solid var(--accent);
+      padding-left: 14px;
+      font-size: 14px;
+      font-family: var(--font-body);
+      line-height: 1.6;
+    }
+    .side-panel dl {
+      display: grid;
+      grid-template-columns: 90px 1fr;
+      gap: 8px 14px;
+      margin: 20px 0 0;
+    }
+    .side-panel dt { color: var(--text-faint); font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; align-self: center; }
+    .side-panel dd { margin: 0; color: var(--text-hi); }
+  </style>
+</head>
+<body class="noise">
+  <div data-chrome="header"></div>
+
+  <main>
+    <section class="c-hero">
+      <div class="shell">
+        <div class="eyebrow reveal" style="margin-bottom: 20px"><span class="idx">/</span> 006 — CONTACT</div>
+        <h1 class="reveal">Let's <em>talk</em>.<span class="cursor"></span></h1>
+        <p class="lede reveal">
+          I'm currently finishing my alternance and open to new opportunities.
+          Feel free to reach out — whether it's a role, a project, or
+          just a good conversation about gameplay systems.
+        </p>
+      </div>
+    </section>
+
+    <section>
+      <div class="shell">
+        <div class="contact-grid">
+          <div class="contact-methods">
+            <a class="reveal" href="mailto:alexis.martinho.78@gmail.com">
+              <span class="icon">@</span>
+              <span class="meta">
+                <span class="k">EMAIL · PRIMARY</span>
+                <span class="v">alexis.martinho.78@gmail.com</span>
+              </span>
+              <span class="arrow">→</span>
+            </a>
+            <a class="reveal" href="https://www.linkedin.com/in/alexis-martinho-76265125b/" target="_blank" rel="noopener">
+              <span class="icon">in</span>
+              <span class="meta">
+                <span class="k">LINKEDIN</span>
+                <span class="v">linkedin.com / in / alexis-martinho</span>
+              </span>
+              <span class="arrow">↗</span>
+            </a>
+            <a class="reveal" href="https://github.com/Al3xics" target="_blank" rel="noopener">
+              <span class="icon">&lt;/&gt;</span>
+              <span class="meta">
+                <span class="k">GITHUB</span>
+                <span class="v">github.com / Al3xics</span>
+              </span>
+              <span class="arrow">↗</span>
+            </a>
+            <a class="reveal" href="https://al3xics.itch.io" target="_blank" rel="noopener">
+              <span class="icon">▶</span>
+              <span class="meta">
+                <span class="k">ITCH.IO</span>
+                <span class="v">al3xics.itch.io — playable games</span>
+              </span>
+              <span class="arrow">↗</span>
+            </a>
+          </div>
+
+          <aside class="side-panel reveal">
+            <h3>// status.txt</h3>
+            <p class="msg">
+              I'm currently finishing my alternance and open to new
+              opportunities. Feel free to reach out!
+            </p>
+            <dl>
+              <dt>status</dt><dd style="color: #4ADE80;">● Open to work</dd>
+              <dt>base</dt><dd>France</dd>
+              <dt>remote</dt><dd>Yes</dd>
+              <dt>types</dt><dd>AAA · Indie · Tech</dd>
+              <dt>role</dt><dd>Gameplay programmer</dd>
+              <dt>stack</dt><dd>UE5 · C++</dd>
+            </dl>
+          </aside>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div data-chrome="footer"></div>
+  <script src="assets/partials.js"></script>
+  <script src="assets/shared.js"></script>
+</body>
+</html>

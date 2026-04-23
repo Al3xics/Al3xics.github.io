@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Personal Projects — Alexis Martinho</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600&family=Space+Grotesk:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/styles.css" />
+  <style>
+    .proj-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+    @media (max-width: 900px) { .proj-grid { grid-template-columns: 1fr; } }
+    .proj-card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--bg-1);
+      overflow: hidden;
+      display: flex; flex-direction: column;
+      transition: border-color 220ms ease, background 220ms ease;
+    }
+    .proj-card:hover { border-color: var(--accent-line); background: var(--bg-2); }
+    .proj-card .head {
+      position: relative;
+      min-height: 240px;
+      overflow: hidden;
+      border-bottom: 1px solid var(--line);
+    }
+    .proj-card .head .tag {
+      position: absolute; top: 14px; left: 16px;
+      font-family: var(--font-mono); font-size: 10.5px;
+      color: var(--text-faint); letter-spacing: 0.14em;
+    }
+    .proj-card .head .eng {
+      position: absolute; top: 14px; right: 16px;
+      font-family: var(--font-mono); font-size: 10.5px;
+      color: var(--accent); letter-spacing: 0.08em;
+    }
+
+    /* Custom engine motif */
+    .motif-engine {
+      background: linear-gradient(135deg, #0a0f14, #08121a);
+      padding: 40px 28px;
+      display: flex; align-items: center; justify-content: center; height: 100%;
+      height: 100%;
+    }
+    .motif-engine pre {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: rgba(107, 138, 255, 0.5);
+      line-height: 1.65;
+      margin: 0;
+      text-align: left;
+    }
+
+    /* Kanji app motif */
+    .motif-kanji {
+      background: radial-gradient(500px 260px at 50% 60%, rgba(200, 48, 42, 0.06), transparent 70%), #0d0a0a;
+      display: flex; align-items: center; justify-content: center; height: 100%;
+      height: 100%;
+    }
+    .motif-kanji .kanji-big {
+      font-family: var(--font-display);
+      font-size: 88px;
+      color: var(--text-hi);
+      letter-spacing: 0.08em;
+      line-height: 1;
+    }
+
+    .proj-card .body { padding: 28px; display: flex; flex-direction: column; gap: 12px; }
+    .proj-card .body h3 { font-size: 28px; letter-spacing: -0.02em; }
+    .proj-card .body .sub {
+      font-family: var(--font-mono); font-size: 12px;
+      color: var(--text-dim); letter-spacing: 0.06em;
+    }
+    .proj-card .body p { font-size: 14px; color: var(--text); margin: 4px 0 0; }
+    .proj-card .body .foot {
+      display: flex; gap: 12px; margin-top: auto; padding-top: 18px;
+      align-items: center; justify-content: space-between; flex-wrap: wrap;
+    }
+    .proj-card .body .foot .arrow-link {
+      font-family: var(--font-mono); font-size: 13px; color: var(--accent);
+    }
+  </style>
+</head>
+<body class="noise">
+  <div data-chrome="header"></div>
+
+  <main>
+    <section class="page-hero">
+      <div class="shell">
+        <div class="eyebrow reveal" style="margin-bottom: 20px"><span class="idx">/</span> 004 — PERSONAL PROJECTS</div>
+        <h1 class="reveal">Side projects.</h1>
+        <p class="lede reveal">
+          Things I built because I wanted to understand the layer below,
+          or because I had a specific personal itch to scratch.
+          Both were solo, and both live on my GitHub.
+        </p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="shell">
+        <div class="proj-grid">
+          <a class="proj-card reveal" href="project-custom-engine.html">
+            <div class="head motif-engine">
+              <span class="tag">// 01 · solo</span>
+              <span class="eng">VULKAN / C++</span>
+              <pre>// Custom-Engine.cpp
+vkCreateInstance(...);
+vkCreatePipeline(...);
+drawFrame(&gfx);
+
+Camera cam;
+cam.moveFreely();   // 6-axis
+cam.rotate();
+
+TransformComponent t;
+t.translate(pos);
+t.scale(sx, sy, sz);
+
+// shaders via glslc
+compile("frag.glsl");
+compile("vert.glsl");</pre>
+            </div>
+            <div class="body">
+              <h3>Custom Engine</h3>
+              <div class="sub">3D RENDERING ENGINE · VULKAN · C++</div>
+              <p>A basic 3D rendering engine built from scratch with Vulkan and C++. 6-axis moveable camera, transform component system, GLSL shader compilation via glslc. Every function documented inline.</p>
+              <div class="badges" style="margin-top: 10px;">
+                <span class="badge accent">Vulkan</span>
+                <span class="badge">C++</span>
+                <span class="badge">Low-level graphics</span>
+              </div>
+              <div class="foot">
+                <span class="mono dim">github.com / Al3xics / Custom-Engine</span>
+                <span class="arrow-link">open →</span>
+              </div>
+            </div>
+          </a>
+
+          <a class="proj-card reveal" href="project-kanji.html">
+            <div class="head motif-kanji">
+              <span class="tag">// 02 · solo</span>
+              <span class="eng">C# / .NET</span>
+              <div style="display: flex; flex-direction: column; align-items: center; gap: 6px;">
+                <div class="kanji-big">漢字</div>
+                <div style="font-family: var(--font-mono); font-size: 10.5px; color: var(--text-faint); letter-spacing: 0.3em;">KANJI · HIRAGANA · KATAKANA</div>
+              </div>
+            </div>
+            <div class="body">
+              <h3>Japanese Kanji App</h3>
+              <div class="sub">WINDOWS DESKTOP APP · C# · .NET</div>
+              <p>A personal Windows app to learn and review Japanese characters. Image-based display, pronunciation info, stroke counts, bulk import via JSON. Built out of personal interest in learning Japanese.</p>
+              <div class="badges" style="margin-top: 10px;">
+                <span class="badge accent">C#</span>
+                <span class="badge">.NET</span>
+                <span class="badge">WPF</span>
+                <span class="badge">Windows</span>
+                <span class="badge">JSON</span>
+              </div>
+              <div class="foot">
+                <span class="mono dim">github.com / Al3xics / Japanese-Application</span>
+                <span class="arrow-link">open →</span>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div data-chrome="footer"></div>
+  <script src="assets/partials.js"></script>
+  <script src="assets/shared.js"></script>
+</body>
+</html>

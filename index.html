@@ -1,0 +1,855 @@
+<!DOCTYPE html><html lang="en" data-hero="identity" style="--accent: oklch(0.72 0.15 155); --accent-2: oklch(0.58 0.15 155); --accent-soft: oklch(0.72 0.15 155 / 0.12); --accent-line: oklch(0.72 0.15 155 / 0.35); --font-display: 'JetBrains Mono', monospace; --font-body: 'IBM Plex Sans', system-ui, sans-serif; --font-mono: 'JetBrains Mono', monospace;"><head>
+
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Alexis Martinho — Gameplay Programmer</title>
+  <meta name="description" content="Portfolio of Alexis Martinho, Gameplay Programmer — UE5, C++, Unity, Vulkan.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600&amp;family=IBM+Plex+Sans:wght@300;400;500;600&amp;family=Space+Grotesk:wght@400;500;600&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="assets/styles.css">
+  <template id="__bundler_thumbnail" data-bg-color="#09090B">
+    <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+      <rect width="1200" height="800" fill="#09090B"></rect>
+      <circle cx="600" cy="400" r="120" fill="none" stroke="#6B8AFF" stroke-width="3" opacity="0.9"></circle>
+      <circle cx="600" cy="400" r="160" fill="none" stroke="#6B8AFF" stroke-width="1" opacity="0.4"></circle>
+      <text x="600" y="590" text-anchor="middle" font-family="monospace" font-size="28" fill="#C8C8CE" letter-spacing="8">ALEXIS MARTINHO</text>
+      <text x="600" y="630" text-anchor="middle" font-family="monospace" font-size="14" fill="#55555D" letter-spacing="4">GAMEPLAY PROGRAMMER</text>
+    </svg>
+  </template>
+  <style>
+    /* ============================
+       Home-only styles
+       ============================ */
+
+    .home-hero {
+      position: relative;
+      padding: 72px 0 40px;
+      min-height: 78vh;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    .home-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(600px 400px at 78% 42%, var(--accent-soft), transparent 60%),
+        linear-gradient(180deg, transparent 70%, rgba(0,0,0,0.6));
+    }
+
+    .hero-grid {
+      position: relative;
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 64px;
+      width: 100%;
+      align-items: center;
+    }
+    @media (max-width: 900px) { .hero-grid { grid-template-columns: 1fr; } }
+
+    .hero-meta {
+      display: flex;
+      gap: 14px;
+      margin-bottom: 28px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .home-hero h1 {
+      font-size: clamp(48px, 8.5vw, 116px);
+      font-weight: 500;
+      letter-spacing: -0.035em;
+      line-height: 0.92;
+    }
+    .home-hero h1 .line { display: block; }
+    .home-hero h1 .line.dim { color: var(--text-dim); }
+    .home-hero h1 .line.accent { color: var(--accent); }
+
+    .tagline {
+      margin-top: 28px;
+      max-width: 52ch;
+      font-size: 17px;
+      color: var(--text);
+      font-family: var(--font-body);
+      line-height: 1.55;
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 12px;
+      margin-top: 36px;
+      flex-wrap: wrap;
+    }
+
+    /* Identity panel on right */
+    .id-panel {
+      border: 1px solid var(--line);
+      background: var(--bg-1);
+      border-radius: 8px;
+      padding: 22px;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      position: relative;
+    }
+    .id-panel::before {
+      content: '';
+      position: absolute;
+      top: -1px; left: 16px; right: 16px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    }
+    .id-panel .head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--line);
+      margin-bottom: 16px;
+    }
+    .id-panel .head .label { color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.12em; font-size: 10.5px; }
+    .id-panel .head .dots { display: flex; gap: 5px; }
+    .id-panel .head .dots span { width: 7px; height: 7px; border-radius: 50%; background: var(--line-strong); }
+    .id-panel .head .dots span:first-child { background: var(--accent); }
+    .id-panel dl { display: grid; grid-template-columns: 90px 1fr; gap: 10px 16px; margin: 0; }
+    .id-panel dt { color: var(--text-faint); }
+    .id-panel dd { margin: 0; color: var(--text-hi); }
+    .id-panel .stack {
+      margin-top: 18px; padding-top: 18px; border-top: 1px dashed var(--line);
+      display: flex; flex-wrap: wrap; gap: 5px;
+    }
+
+    /* Terminal hero variant */
+    :root[data-hero="terminal"] .home-hero .terminal { display: block; }
+    :root[data-hero="terminal"] .home-hero .identity,
+    :root[data-hero="terminal"] .home-hero .editorial { display: none; }
+
+    :root[data-hero="editorial"] .home-hero .editorial { display: block; }
+    :root[data-hero="editorial"] .home-hero .identity,
+    :root[data-hero="editorial"] .home-hero .terminal { display: none; }
+
+    :root[data-hero="identity"] .home-hero .terminal,
+    :root[data-hero="identity"] .home-hero .editorial { display: none; }
+
+    /* Terminal variant */
+    .terminal { display: none; width: 100%; }
+    .terminal-window {
+      border: 1px solid var(--line);
+      background: var(--bg-1);
+      border-radius: 8px;
+      font-family: var(--font-mono);
+      font-size: 14px;
+      line-height: 1.75;
+      overflow: hidden;
+      max-width: 820px;
+    }
+    .terminal-window .bar {
+      display: flex; align-items: center; gap: 6px;
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--line);
+      background: var(--bg-2);
+    }
+    .terminal-window .bar .d { width: 10px; height: 10px; border-radius: 50%; background: var(--line-strong); }
+    .terminal-window .bar .d:nth-child(1) { background: #E55757; }
+    .terminal-window .bar .d:nth-child(2) { background: #E5B557; }
+    .terminal-window .bar .d:nth-child(3) { background: #8FD070; }
+    .terminal-window .bar .path { margin-left: 12px; color: var(--text-faint); font-size: 12px; }
+    .terminal-window .body { padding: 22px 26px; }
+    .terminal-window .prompt { color: var(--accent); }
+    .terminal-window .out { color: var(--text); }
+    .terminal-window .cmt { color: var(--text-faint); }
+
+    /* Editorial variant */
+    .editorial { display: none; }
+    .editorial h1 {
+      font-family: var(--font-display);
+      font-size: clamp(80px, 16vw, 240px);
+      line-height: 0.82;
+      letter-spacing: -0.05em;
+      font-weight: 500;
+    }
+    .editorial .col { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 40px; align-items: end; }
+    @media (max-width: 900px) { .editorial .col { grid-template-columns: 1fr; } }
+
+    /* Background ASCII-ish pattern */
+    .hero-bg-pattern {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.18;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      line-height: 1.4;
+      color: var(--text-faint);
+      overflow: hidden;
+      white-space: pre;
+      padding: 40px;
+      mask-image: radial-gradient(circle at 70% 50%, black, transparent 70%);
+      -webkit-mask-image: radial-gradient(circle at 70% 50%, black, transparent 70%);
+    }
+
+    /* Featured grid */
+    .featured { padding-top: var(--r-6); }
+    .featured-row {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 24px;
+    }
+    @media (max-width: 1100px) { .featured-row { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 640px) { .featured-row { grid-template-columns: 1fr; } }
+
+    .feat-card { grid-column: span 2; }
+    .feat-card.wide { grid-column: span 3; }
+    .feat-card.full { grid-column: span 6; }
+    @media (max-width: 1100px) { .feat-card, .feat-card.wide, .feat-card.full { grid-column: span 1; } }
+
+    /* About preview */
+    .about-preview {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: start;
+    }
+    @media (max-width: 900px) { .about-preview { grid-template-columns: 1fr; } }
+    .about-preview .big {
+      font-family: var(--font-display);
+      font-size: clamp(24px, 2.6vw, 34px);
+      line-height: 1.3;
+      color: var(--text-hi);
+      letter-spacing: -0.015em;
+      text-wrap: balance;
+    }
+    .about-preview .big em {
+      color: var(--accent);
+      font-style: normal;
+    }
+    .about-preview .side dl { display: grid; grid-template-columns: auto 1fr; gap: 10px 18px; font-family: var(--font-mono); font-size: 13px; margin: 0; }
+    .about-preview .side dt { color: var(--text-faint); text-transform: uppercase; letter-spacing: 0.08em; font-size: 11px; align-self: center; }
+    .about-preview .side dd { margin: 0; color: var(--text-hi); }
+
+    /* Thumb motifs (per game) */
+    .thumb-motif {
+      position: absolute; inset: 0;
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden;
+    }
+    .thumb .glyph {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--text-faint);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      position: absolute;
+      top: 12px; left: 16px;
+    }
+    .thumb .tag-pos {
+      position: absolute;
+      top: 12px; right: 16px;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--text-faint);
+      letter-spacing: 0.1em;
+    }
+
+    /* GollumGO motif: glowing ring on swamp fog */
+    .motif-gollum {
+      background:
+        radial-gradient(600px 300px at 50% 100%, rgba(66, 84, 62, 0.25), transparent 60%),
+        radial-gradient(260px 160px at 50% 50%, rgba(190, 170, 120, 0.22), transparent 70%),
+        linear-gradient(180deg, #0A0D0A, #0C100D 60%, #0A0B09);
+    }
+    .motif-gollum .ring {
+      width: 120px; height: 120px;
+      border: 2px solid rgba(224, 196, 140, 0.85);
+      border-radius: 50%;
+      box-shadow:
+        0 0 40px rgba(224, 196, 140, 0.35),
+        0 0 80px rgba(224, 196, 140, 0.15),
+        inset 0 0 20px rgba(224, 196, 140, 0.25);
+    }
+
+    /* Onryō motif: red slash, ink */
+    .motif-onryo {
+      background:
+        repeating-linear-gradient(90deg, rgba(255,255,255,0.025) 0 1px, transparent 1px 40px),
+        radial-gradient(600px 400px at 20% 50%, rgba(180, 20, 20, 0.14), transparent 60%),
+        #080608;
+    }
+    .motif-onryo .slash {
+      position: absolute;
+      top: 20%; left: 20%;
+      width: 60%; height: 6px;
+      background: linear-gradient(90deg, transparent, #C8302A 30%, #E45A52, #C8302A 70%, transparent);
+      transform: rotate(-12deg);
+      box-shadow: 0 0 40px rgba(200, 48, 42, 0.6);
+    }
+    .motif-onryo .kanji {
+      position: absolute;
+      right: 18px; bottom: 14px;
+      font-family: var(--font-display);
+      font-size: 72px;
+      color: rgba(200, 48, 42, 0.35);
+      letter-spacing: -0.05em;
+      line-height: 1;
+    }
+
+    /* Wendogo motif: day/night cards */
+    .motif-wendogo {
+      background: #0A0B10;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .motif-wendogo .cards { display: flex; gap: 14px; transform: rotate(-4deg); }
+    .motif-wendogo .mcard {
+      width: 58px; height: 86px; border-radius: 6px;
+      border: 1px solid var(--line-strong);
+    }
+    .motif-wendogo .mcard.day { background: linear-gradient(180deg, #1a1e2a, #0f1218); }
+    .motif-wendogo .mcard.night {
+      background: linear-gradient(180deg, #25283a, #14161f);
+      box-shadow: inset 0 0 20px rgba(90, 100, 160, 0.3);
+      transform: translateY(10px) rotate(6deg);
+    }
+    .motif-wendogo .mcard.hidden { background: linear-gradient(180deg, #151719, #0a0b0e); transform: rotate(-8deg) translateY(4px); }
+
+    /* Myceland motif: organic dot bloom */
+    .motif-myceland {
+      background:
+        radial-gradient(600px 400px at 50% 60%, rgba(210, 150, 90, 0.12), transparent 60%),
+        #0b0a09;
+    }
+    .motif-myceland .bloom {
+      position: absolute; inset: 0;
+      background-image: radial-gradient(rgba(212, 162, 76, 0.55) 1px, transparent 1.5px);
+      background-size: 12px 12px;
+      mask-image: radial-gradient(180px 180px at 50% 55%, black, transparent 80%);
+      -webkit-mask-image: radial-gradient(180px 180px at 50% 55%, black, transparent 80%);
+    }
+    .motif-myceland .wip {
+      position: absolute; bottom: 12px; right: 12px;
+      font-family: var(--font-mono); font-size: 10px;
+      color: var(--warn); letter-spacing: 0.12em;
+      padding: 3px 8px; border: 1px solid rgba(212, 162, 76, 0.4);
+      background: rgba(212, 162, 76, 0.08); border-radius: 100px;
+    }
+
+    /* Stats strip */
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: var(--line);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
+      margin-top: 48px;
+    }
+    @media (max-width: 700px) { .stats { grid-template-columns: repeat(2, 1fr); } }
+    .stats .stat { background: var(--bg-1); padding: 24px; }
+    .stats .stat .num {
+      font-family: var(--font-display);
+      font-size: 34px;
+      letter-spacing: -0.02em;
+      color: var(--text-hi);
+      font-weight: 500;
+    }
+    .stats .stat .num .unit { color: var(--accent); font-size: 18px; }
+    .stats .stat .lbl {
+      margin-top: 6px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-dim);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+  </style>
+</head>
+<body class="noise" data-cc-id="cc-1" style="cursor: crosshair; background-color: rgb(0, 0, 0);">
+  
+      <header class="topbar">
+        <div class="topbar-inner">
+          <a class="brand" href="index.html">
+            <span class="dot"></span>
+            <span>alexis.martinho</span>
+            <span class="tag">/ gameplay programmer</span>
+          </a>
+          <nav class="nav">
+            <a href="index.html" class="active">Home</a><a href="about.html">About</a><a href="games.html">Games</a><a href="projects.html">Projects</a><a href="alternance.html">Alternance</a><a href="contact.html">Contact</a>
+          </nav>
+        </div>
+      </header>
+    
+
+  <main>
+    <!-- ===== HERO ===== -->
+    <section class="home-hero">
+      <div class="hero-bg-pattern" aria-hidden="true">
+01010100 10101100 01001010 11010010 10101101 01001100 11001010 01010110
+10011010 01101001 11000101 10010101 01010110 10101010 01011010 01011011
+11010100 10101010 01010101 10101101 11001010 10101010 11010101 01010101
+10110101 01010110 10100110 10101100 01010101 11010011 10101010 01100101
+.............................................. LOADING PIPELINE .............................................
+// UE5 · C++ · BLUEPRINTS · UNITY · C# · VULKAN · GRPC · METAHUMAN · MULTIPLAYER
+// frame  [████████████████████████████████████████████████████████████████] 100%
+      </div>
+
+      <div class="shell">
+        <!-- Variant A: Identity (default) -->
+        <div class="identity hero-grid">
+          <div>
+            <div class="hero-meta reveal in">
+              <span class="status"><span class="pulse"></span> Open to opportunities</span>
+              <span class="badge"><span class="k">loc</span> France</span>
+              <span class="badge"><span class="k">yr</span> Y2 / Alternance</span>
+            </div>
+            <h1 class="reveal in">
+              <span class="line">Alexis</span>
+              <span class="line">Martinho<span class="cursor"></span></span>
+              <span class="line dim">Gameplay</span>
+              <span class="line accent">Programmer.</span>
+            </h1>
+            <p class="tagline reveal in">
+              Passionate about game development, always eager to learn
+              and tackle new technical challenges. I build systems,
+              mechanics, and tools — mostly in <span class="hi">Unreal Engine 5</span>
+              and <span class="hi">C++</span>.
+            </p>
+            <div class="hero-cta reveal in">
+              <a class="btn btn-primary" href="games.html">
+                View projects <span class="arrow">→</span>
+              </a>
+              <a class="btn btn-ghost" href="contact.html">
+                Contact me
+              </a>
+            </div>
+          </div>
+
+          <aside class="id-panel reveal in">
+            <div class="head">
+              <span class="label">// identity.json</span>
+              <div class="dots"><span></span><span></span><span></span></div>
+            </div>
+            <dl>
+              <dt>name</dt><dd>Alexis Martinho</dd>
+              <dt>role</dt><dd>Gameplay Programmer</dd>
+              <dt>primary</dt><dd>Unreal Engine 5</dd>
+              <dt>langs</dt><dd>C++ · C#</dd>
+              <dt>status</dt><dd><span class="accent-text">Student · Alternance</span></dd>
+              <dt>focus</dt><dd>Systems &amp; mechanics</dd>
+              <dt>github</dt><dd><a href="https://github.com/Al3xics" target="_blank" rel="noopener" class="hi" style="border-bottom:1px dashed var(--line-strong)">@Al3xics ↗</a></dd>
+            </dl>
+            <div class="stack">
+              <span class="badge">UE5</span>
+              <span class="badge">C++</span>
+              <span class="badge">Blueprints</span>
+              <span class="badge">Unity</span>
+              <span class="badge">C#</span>
+              <span class="badge">UMG</span>
+              <span class="badge">gRPC</span>
+              <span class="badge">MetaHuman</span>
+              <span class="badge">Git</span>
+            </div>
+          </aside>
+        </div>
+
+        <!-- Variant B: Terminal-inspired -->
+        <div class="terminal">
+          <div class="terminal-window">
+            <div class="bar">
+              <span class="d"></span><span class="d"></span><span class="d"></span>
+              <span class="path">~ / alexis-martinho / portfolio</span>
+            </div>
+            <div class="body">
+              <div><span class="prompt">$</span> whoami</div>
+              <div class="out">alexis-martinho</div>
+              <div style="height:8px"></div>
+              <div><span class="prompt">$</span> cat role.md</div>
+              <div class="out">
+                <span style="font-size: clamp(36px, 6vw, 72px); font-family: var(--font-display); color: var(--text-hi); line-height: 1.05; display:block; margin: 8px 0">Gameplay Programmer.</span>
+              </div>
+              <div class="cmt"># Passionate about game development, always eager to learn</div>
+              <div class="cmt"># and tackle new technical challenges.</div>
+              <div style="height:8px"></div>
+              <div><span class="prompt">$</span> ls stack/</div>
+              <div class="out">ue5&nbsp;&nbsp;c++&nbsp;&nbsp;blueprints&nbsp;&nbsp;unity&nbsp;&nbsp;c#&nbsp;&nbsp;vulkan&nbsp;&nbsp;grpc&nbsp;&nbsp;metahuman&nbsp;&nbsp;git</div>
+              <div style="height:8px"></div>
+              <div><span class="prompt">$</span> _<span class="cursor"></span></div>
+              <div style="height:24px"></div>
+              <div class="hero-cta" style="margin-top: 0">
+                <a class="btn btn-primary" href="games.html">cd projects/ <span class="arrow">→</span></a>
+                <a class="btn btn-ghost" href="contact.html">./contact.sh</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Variant C: Editorial typography -->
+        <div class="editorial">
+          <div class="eyebrow reveal"><span class="idx">/</span> 001 — IDENTITY</div>
+          <h1 class="reveal">ALEXIS<br><span style="color: var(--accent)">MARTINHO</span></h1>
+          <div class="col">
+            <div class="reveal">
+              <p style="font-size: 17px; color: var(--text);">
+                Gameplay programmer. UE5 &amp; C++ at the core. Currently in my
+                second alternance year, building systems, tools, and games.
+              </p>
+              <div class="hero-cta">
+                <a class="btn btn-primary" href="games.html">View projects <span class="arrow">→</span></a>
+                <a class="btn btn-ghost" href="contact.html">Contact me</a>
+              </div>
+            </div>
+            <div class="reveal">
+              <div class="eyebrow" style="margin-bottom: 12px"><span class="idx">/</span> STACK</div>
+              <div class="badges">
+                <span class="badge accent">UE5</span>
+                <span class="badge">C++</span>
+                <span class="badge">Blueprints</span>
+                <span class="badge">Unity</span>
+                <span class="badge">C#</span>
+                <span class="badge">Vulkan</span>
+                <span class="badge">gRPC</span>
+                <span class="badge">Git</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== ABOUT PREVIEW ===== -->
+    <section class="section">
+      <div class="shell">
+        <div class="section-head reveal in">
+          <div class="num">/01</div>
+          <h2>About</h2>
+          <div class="meta">alexis.martinho → context</div>
+        </div>
+
+        <div class="about-preview">
+          <p class="big reveal in">
+            I'm a <em>game development student</em> in a 2-year alternance program,
+            splitting time between school and professional work. I love
+            <em>low-level technical challenges</em> and learning new tools,
+            engines and paradigms. My home turf is <em>Unreal Engine 5</em> —
+            but I keep reaching for whatever the problem actually needs.
+          </p>
+          <div class="side reveal in">
+            <dl>
+              <dt>status</dt><dd>Student · alternance Y2</dd>
+              <dt>engine</dt><dd>Unreal Engine 5 (primary)</dd>
+              <dt>langs</dt><dd>C++ · C#</dd>
+              <dt>also</dt><dd>Unity, .NET</dd>
+              <dt>looking</dt><dd>Any game / tech company</dd>
+            </dl>
+            <div style="margin-top: 28px">
+              <a class="btn btn-ghost" href="about.html">Full about page <span class="arrow">→</span></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== FEATURED PROJECTS ===== -->
+    <section class="section featured">
+      <div class="shell">
+        <div class="section-head reveal in">
+          <div class="num">/02</div>
+          <h2>Selected work</h2>
+          <div class="meta">6 projects · 4 games · 2 personal</div>
+        </div>
+
+        <div class="featured-row">
+
+          <!-- GollumGO - wide -->
+          <a class="card project-card feat-card wide reveal in" href="game-gollumgo.html">
+            <div class="thumb motif-gollum">
+              <span class="glyph">// 01 · team</span>
+              <span class="tag-pos">UE5 / Blueprints</span>
+              <div class="thumb-motif"><div class="ring"></div></div>
+            </div>
+            <div class="card-body">
+              <div class="card-head">
+                <div>
+                  <div class="card-title">GollumGO</div>
+                  <div class="card-sub">Tactical puzzle · PC</div>
+                </div>
+                <span class="bracket">→</span>
+              </div>
+              <p class="card-desc">Turn-based stealth puzzle. Risk/reward ring mechanic — invisible to orcs, exposed to the Nazgûl.</p>
+              <div class="badges">
+                <span class="badge accent">UE5</span>
+                <span class="badge">Blueprints</span>
+                <span class="badge">Team</span>
+                <span class="badge">Playable on itch.io</span>
+              </div>
+            </div>
+          </a>
+
+          <!-- Onryō - wide -->
+          <a class="card project-card feat-card wide reveal in" href="game-onryo.html">
+            <div class="thumb motif-onryo">
+              <span class="glyph">// 02 · team</span>
+              <span class="tag-pos">UE5 / C++</span>
+              <div class="slash"></div>
+              <div class="kanji">怨</div>
+            </div>
+            <div class="card-body">
+              <div class="card-head">
+                <div>
+                  <div class="card-title">Onryō</div>
+                  <div class="card-sub">Fast arena FPS · PC</div>
+                </div>
+                <span class="bracket">→</span>
+              </div>
+              <p class="card-desc">First-person shooter — possess enemies to steal their weapons, stats, and inventory, and turn them against each other.</p>
+              <div class="badges">
+                <span class="badge accent">UE5</span>
+                <span class="badge">C++</span>
+                <span class="badge">Team</span>
+                <span class="badge">Playable on itch.io</span>
+              </div>
+            </div>
+          </a>
+
+          <!-- Wendogo - 2 cols -->
+          <a class="card project-card feat-card reveal in" href="game-wendogo.html">
+            <div class="thumb motif-wendogo">
+              <span class="glyph">// 03 · team</span>
+              <span class="tag-pos">Unity 6 / C#</span>
+              <div class="cards">
+                <div class="mcard day"></div>
+                <div class="mcard night"></div>
+                <div class="mcard hidden"></div>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="card-head">
+                <div>
+                  <div class="card-title">Wendogo</div>
+                  <div class="card-sub">Multiplayer social deduction · Android</div>
+                </div>
+                <span class="bracket">→</span>
+              </div>
+              <p class="card-desc">Hidden-role card game. Cooperate by day, commit hidden actions by night — with real-time voice chat.</p>
+              <div class="badges">
+                <span class="badge accent">Unity</span>
+                <span class="badge">C#</span>
+                <span class="badge">Multiplayer</span>
+              </div>
+            </div>
+          </a>
+
+          <!-- Myceland - 2 cols -->
+          <a class="card project-card feat-card reveal in" href="game-myceland.html">
+            <div class="thumb motif-myceland">
+              <span class="glyph">// 04 · solo</span>
+              <span class="tag-pos">UE5 / C++</span>
+              <div class="bloom"></div>
+              <div class="wip">WORK IN PROGRESS</div>
+            </div>
+            <div class="card-body">
+              <div class="card-head">
+                <div>
+                  <div class="card-title">Myceland</div>
+                  <div class="card-sub">Puzzle narrative · PC</div>
+                </div>
+                <span class="bracket">→</span>
+              </div>
+              <p class="card-desc">Incarnate the world itself. Revive a destroyed land by planting mushrooms and solving puzzles woven into the story.</p>
+              <div class="badges">
+                <span class="badge accent">UE5</span>
+                <span class="badge">C++</span>
+                <span class="badge warn">In progress</span>
+              </div>
+            </div>
+          </a>
+
+          <!-- Custom Engine - 2 cols -->
+          <a class="card project-card feat-card reveal in" href="project-custom-engine.html">
+            <div class="thumb" style="background: linear-gradient(135deg, #0a0f14, #08121a); border-bottom: 1px solid var(--line);">
+              <span class="glyph" style="color: var(--text-faint)">// personal</span>
+              <span class="tag-pos">Vulkan / C++</span>
+              <div class="thumb-motif" style="font-family: var(--font-mono); font-size: 10px; color: rgba(107, 138, 255, 0.45); flex-direction: column; gap: 2px; line-height: 1.2; text-align: left; padding: 0 24px;">
+                <pre style="margin:0">vkCreateInstance(...)
+vkCreatePipeline(...)
+drawFrame(&amp;gfx);
+// 6-axis camera
+// transform components
+// glslc shader pipe</pre>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="card-head">
+                <div>
+                  <div class="card-title">Custom Engine</div>
+                  <div class="card-sub">3D renderer from scratch</div>
+                </div>
+                <span class="bracket">→</span>
+              </div>
+              <p class="card-desc">Vulkan + C++ 3D rendering engine. 6-axis camera, transform components, GLSL shader pipeline via glslc.</p>
+              <div class="badges">
+                <span class="badge accent">Vulkan</span>
+                <span class="badge">C++</span>
+                <span class="badge">Low-level</span>
+              </div>
+            </div>
+          </a>
+
+          <!-- Kanji App - 2 cols -->
+          <a class="card project-card feat-card reveal in" href="project-kanji.html">
+            <div class="thumb" style="background: radial-gradient(400px 200px at 50% 60%, rgba(200, 48, 42, 0.08), transparent 70%), #0d0a0a; border-bottom: 1px solid var(--line);">
+              <span class="glyph" style="color: var(--text-faint)">// personal</span>
+              <span class="tag-pos">C# / .NET</span>
+              <div class="thumb-motif" style="flex-direction: column; gap: 6px;">
+                <div style="font-family: var(--font-display); font-size: 56px; color: var(--text-hi); letter-spacing: 0.05em; line-height: 1;">漢字</div>
+                <div style="font-family: var(--font-mono); font-size: 10px; color: var(--text-faint); letter-spacing: 0.2em;">KANJI.APP</div>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="card-head">
+                <div>
+                  <div class="card-title">Japanese Kanji App</div>
+                  <div class="card-sub">Windows desktop · .NET</div>
+                </div>
+                <span class="bracket">→</span>
+              </div>
+              <p class="card-desc">A personal Windows app to learn Kanji, Hiragana, and Katakana. Bulk import, strokes, custom MSI installer.</p>
+              <div class="badges">
+                <span class="badge accent">C#</span>
+                <span class="badge">.NET</span>
+                <span class="badge">WPF</span>
+              </div>
+            </div>
+          </a>
+        </div>
+
+        <div style="margin-top: 32px; display: flex; gap: 12px; flex-wrap: wrap;">
+          <a class="btn btn-ghost" href="games.html">All games <span class="arrow">→</span></a>
+          <a class="btn btn-ghost" href="projects.html">Personal projects <span class="arrow">→</span></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== ALTERNANCE STRIP ===== -->
+    <section class="section-sm">
+      <div class="shell">
+        <div class="section-head reveal in">
+          <div class="num">/03</div>
+          <h2>Currently</h2>
+          <div class="meta">alternance · Y2 of 2</div>
+        </div>
+
+        <div class="card reveal in" style="display: grid; grid-template-columns: 1fr 1fr; gap: 0;">
+          <div style="padding: 32px; border-right: 1px solid var(--line);">
+            <div class="eyebrow" style="margin-bottom: 14px"><span class="idx">▸</span> ROLE</div>
+            <h3 style="font-size: 28px; margin-bottom: 8px;">Unreal Engine Developer</h3>
+            <div class="mono dim" style="font-size: 13px; margin-bottom: 18px;">Aumovio (formerly part of Continental) · 2Y</div>
+            <p style="font-size: 15px; color: var(--text);">
+              Sole UE5 expert on the team. Building an Unreal Engine 5 application that
+              configures and animates a MetaHuman avatar, receiving configuration data
+              via gRPC and json config file to generate datasets.
+            </p>
+            <div class="badges" style="margin-top: 16px">
+              <span class="badge accent">UE5</span>
+              <span class="badge">C++</span>
+              <span class="badge">MetaHuman</span>
+              <span class="badge">gRPC</span>
+              <span class="badge">json</span>
+            </div>
+          </div>
+          <div style="padding: 32px; display: flex; flex-direction: column; justify-content: space-between;">
+            <div>
+              <div class="eyebrow" style="margin-bottom: 14px"><span class="idx">▸</span> HIGHLIGHTS</div>
+              <ul style="list-style: none; padding: 0; margin: 0; font-family: var(--font-mono); font-size: 13px; line-height: 1.8;">
+                <li><span class="accent-text">▸</span> Go-to UE5 expert on the team — colleagues regularly turn to me for advanced UE5 questions</li>
+                <li><span class="accent-text">▸</span> Integrated gRPC into UE5</li>
+                <li><span class="accent-text">▸</span> Built a dataset-generation tool for internal use</li>
+                <li><span class="accent-text">▸</span> Worked with MetaHuman for realistic avatar config</li>
+              </ul>
+            </div>
+            <div style="margin-top: 24px">
+              <a class="btn btn-ghost" href="alternance.html">Read more <span class="arrow">→</span></a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Stats strip -->
+        <div class="stats reveal in">
+          <div class="stat">
+            <div class="num">6<span class="unit"> projects</span></div>
+            <div class="lbl">shipped &amp; in progress</div>
+          </div>
+          <div class="stat">
+            <div class="num">2<span class="unit"> years</span></div>
+            <div class="lbl">professional alternance</div>
+          </div>
+          <div class="stat">
+            <div class="num">4<span class="unit"> engines</span></div>
+            <div class="lbl">UE5 · Unity · Vulkan · .NET</div>
+          </div>
+          <div class="stat">
+            <div class="num">11<span class="unit"> itch.io</span></div>
+            <div class="lbl">public game releases</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== CTA ===== -->
+    <section class="section">
+      <div class="shell">
+        <div class="card reveal in" style="padding: 48px; display: flex; gap: 40px; align-items: center; justify-content: space-between; flex-wrap: wrap;">
+          <div>
+            <div class="eyebrow" style="margin-bottom: 14px"><span class="idx">/</span> GET IN TOUCH</div>
+            <h2 style="font-size: clamp(28px, 3.4vw, 44px); max-width: 18ch;">Got an interesting project? I'd love to hear about it.</h2>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 12px;">
+            <a class="btn btn-primary" href="mailto:alexis.martinho.78@gmail.com">
+              alexis.martinho.78@gmail.com <span class="arrow">→</span>
+            </a>
+            <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+              <a class="btn btn-ghost" href="https://www.linkedin.com/in/alexis-martinho-76265125b/" target="_blank" rel="noopener">LinkedIn ↗</a>
+              <a class="btn btn-ghost" href="https://github.com/Al3xics" target="_blank" rel="noopener">GitHub ↗</a>
+              <a class="btn btn-ghost" href="https://al3xics.itch.io/" target="_blank" rel="noopener">itch.io ↗</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  
+      <footer class="foot">
+        <div class="shell">
+          <div class="row">
+            <div>
+              <div class="eyebrow" style="margin-bottom:12px"><span class="idx">/</span> END OF LINE</div>
+              <div class="sign">Let's build<br>something good.</div>
+              <div class="mono dim" style="margin-top:16px; font-size:13px;">alexis.martinho.78@gmail.com</div>
+            </div>
+            <div class="links">
+              <a href="contact.html">→ Contact</a>
+              <a href="https://www.linkedin.com/in/alexis-martinho-76265125b/" target="_blank" rel="noopener">→ LinkedIn</a>
+              <a href="https://github.com/Al3xics" target="_blank" rel="noopener">→ GitHub</a>
+              <a href="https://al3xics.itch.io/" target="_blank" rel="noopener">→ itch.io</a>
+              <a href="mailto:alexis.martinho.78@gmail.com">→ Email</a>
+            </div>
+          </div>
+          <div class="legal">
+            <span>© 2026 Alexis Martinho — Portfolio v1.0</span>
+            <span>Designed &amp; built from scratch · No templates</span>
+          </div>
+        </div>
+      </footer>
+    
+
+  <script src="assets/partials.js"></script>
+  <script src="assets/shared.js"></script>
+
+
+</body></html>

@@ -1,0 +1,346 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Alternance — Alexis Martinho</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600&family=Space+Grotesk:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/styles.css" />
+  <link rel="stylesheet" href="assets/game-page.css" />
+  <style>
+    .alt-hero { padding: 80px 0 48px; border-bottom: 1px solid var(--line); position: relative; overflow: hidden; }
+    .alt-hero h1 { font-size: clamp(48px, 7vw, 92px); line-height: 0.95; letter-spacing: -0.03em; }
+    .alt-hero h1 em { color: var(--accent); font-style: normal; }
+    .alt-hero .lede { margin-top: 24px; max-width: 58ch; font-size: 17px; color: var(--text); }
+
+    /* Timeline */
+    .timeline {
+      position: relative;
+      padding: var(--r-5) 0;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 140px;
+      top: 20px; bottom: 20px;
+      width: 1px;
+      background: var(--line);
+    }
+    @media (max-width: 700px) { .timeline::before { left: 12px; } }
+
+    .tl-entry {
+      position: relative;
+      display: grid;
+      grid-template-columns: 140px 1fr;
+      gap: 24px;
+      padding: 16px 0 32px;
+    }
+    @media (max-width: 700px) { .tl-entry { grid-template-columns: 1fr; gap: 10px; padding-left: 32px; } }
+
+    .tl-entry .when {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--text-dim);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding-top: 2px;
+    }
+    .tl-entry::before {
+      content: '';
+      position: absolute;
+      left: 134px; top: 24px;
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: var(--bg-0);
+      border: 2px solid var(--accent);
+      box-shadow: 0 0 0 4px var(--accent-soft);
+    }
+    @media (max-width: 700px) { .tl-entry::before { left: 6px; } }
+
+    .tl-card {
+      padding: 20px 22px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: var(--bg-1);
+    }
+    .tl-card h3 {
+      font-family: var(--font-display); font-size: 18px;
+      color: var(--text-hi); letter-spacing: -0.01em; margin-bottom: 6px;
+    }
+    .tl-card p { font-size: 14px; color: var(--text); margin: 0; }
+
+    /* Mission card */
+    .mission {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--bg-1);
+      padding: 40px;
+      display: grid;
+      grid-template-columns: 1.3fr 1fr;
+      gap: 48px;
+    }
+    @media (max-width: 900px) { .mission { grid-template-columns: 1fr; gap: 28px; padding: 28px; } }
+    .mission h2 { font-size: 32px; margin-bottom: 18px; }
+    .mission p { font-size: 16px; margin-bottom: 1em; }
+    .mission .diagram {
+      border: 1px dashed var(--line-strong);
+      border-radius: 6px;
+      padding: 22px;
+      background: var(--bg-2);
+      font-family: var(--font-mono);
+      font-size: 12.5px;
+      line-height: 1.75;
+    }
+    .mission .diagram .row { display: flex; align-items: center; gap: 10px; padding: 4px 0; }
+    .mission .diagram .node {
+      padding: 6px 12px;
+      border: 1px solid var(--line-strong);
+      border-radius: 4px;
+      background: var(--bg-1);
+      color: var(--text-hi);
+    }
+    .mission .diagram .node.accent { border-color: var(--accent-line); color: var(--accent); background: var(--accent-soft); }
+    .mission .diagram .arr { color: var(--text-faint); }
+    .mission .diagram .label {
+      color: var(--text-faint);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      font-size: 10px;
+      margin: 12px 0 6px;
+    }
+
+    /* Highlight grid */
+    .highlights {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+    @media (max-width: 700px) { .highlights { grid-template-columns: 1fr; } }
+    .highlight {
+      padding: 24px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: var(--bg-1);
+    }
+    .highlight .n {
+      font-family: var(--font-mono); font-size: 11px;
+      color: var(--accent); letter-spacing: 0.14em; margin-bottom: 10px;
+    }
+    .highlight h3 { font-size: 17px; margin-bottom: 6px; }
+    .highlight p { font-size: 14px; color: var(--text); margin: 0; }
+
+    .company-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 24px;
+      align-items: center;
+      padding: 20px 24px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: var(--bg-1);
+      margin-top: 24px;
+    }
+    @media (max-width: 700px) { .company-row { grid-template-columns: 1fr; } }
+    .company-row .name {
+      font-family: var(--font-display); font-size: 20px; color: var(--text-hi);
+    }
+    .company-row .sub {
+      font-family: var(--font-mono); font-size: 12px; color: var(--text-dim);
+      margin-top: 2px;
+    }
+  </style>
+</head>
+<body class="noise">
+  <div data-chrome="header"></div>
+
+  <main>
+    <section class="alt-hero">
+      <div class="shell">
+        <div class="eyebrow reveal" style="margin-bottom: 20px"><span class="idx">/</span> 005 — ALTERNANCE</div>
+        <h1 class="reveal">Two years as the<br><em>UE5 expert</em> on my team.</h1>
+        <p class="lede reveal">
+          A 2-year alternance program, alternating between school and
+          professional work. I'm the Unreal Engine 5 expert on my team —
+          Working on a MetaHuman configuration tool, driven over
+          gRPC, built to generate datasets. My teammates are still ramping
+          up on Unreal, and I'm their go-to on the engine.
+        </p>
+
+        <div class="company-row reveal">
+          <div>
+            <div class="name">Aumovio <span class="dim" style="font-weight: 400; font-size: 14px;">(formerly part of Continental)</span></div>
+            <div class="sub">Unreal Engine Developer · Gameplay Programmer · 2Y alternance</div>
+          </div>
+          <span class="status"><span class="pulse"></span> Active · Y2</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="shell">
+        <div class="section-head reveal">
+          <div class="num">/01</div>
+          <h2>The mission</h2>
+          <div class="meta">MetaHuman · gRPC · UE5</div>
+        </div>
+
+        <div class="mission">
+          <div class="reveal">
+            <h2 style="font-size: 26px;">A MetaHuman config &amp; dataset-gen tool.</h2>
+            <p>
+              I am building an application in Unreal Engine 5 that configures and animates
+              a MetaHuman avatar using a large range of parameters.
+            </p>
+            <p>
+              The app communicates via <span class="hi">gRPC</span> and/or a <span class="hi">UI</span> to the json config file
+              to receive configuration data from an external service, then uses those parameters
+              to drive the MetaHuman and generate datasets — used internally by the team.
+            </p>
+            <div class="badges" style="margin-top: 20px;">
+              <span class="badge accent">UE5</span>
+              <span class="badge">C++</span>
+              <span class="badge">Blueprints</span>
+              <span class="badge">MetaHuman</span>
+              <span class="badge">gRPC</span>
+              <span class="badge">json</span>
+            </div>
+          </div>
+          <div class="reveal">
+            <div class="diagram">
+              <div class="label">▸ DATA FLOW (MVC)</div>
+              <div class="row">
+                <span class="node">gRPC</span>
+                <span class="arr">/</span>
+                <span class="node">UI</span>
+                <span class="arr">/</span>
+                <span class="node">...</span>
+                <span class="arr" style="opacity: 0.6;">(Controllers)</span>
+              </div>
+              <div class="row" style="padding-left: 20px;">
+                <span class="arr">↓ write</span>
+              </div>
+              <div class="row">
+                <span class="node accent">json config</span>
+                <span class="arr" style="opacity: 0.6;">(Model)</span>
+              </div>
+              <div class="row" style="padding-left: 20px;">
+                <span class="arr">↓ update</span>
+              </div>
+              <div class="row">
+                <span class="node">MetaHuman</span>
+                <span class="arr">/</span>
+                <span class="node">UI</span>
+                <span class="arr">/</span>
+                <span class="node">...</span>
+              </div>
+              <div class="row">
+                <span class="arr">↓ render</span>
+              </div>
+              <div class="row">
+                <span class="node accent">dataset</span>
+              </div>
+              <div class="label" style="margin-top: 18px;">▸ ROLE</div>
+              <div style="color: var(--text); padding: 4px 0;">UE5 expert / lead on team</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="shell">
+        <div class="section-head reveal">
+          <div class="num">/02</div>
+          <h2>Highlights</h2>
+          <div class="meta">what I own</div>
+        </div>
+
+        <div class="highlights">
+          <div class="highlight reveal">
+            <div class="n">▸ 01 / OWNERSHIP</div>
+            <h3>UE5 expert on the team.</h3>
+            <p>Leading Unreal-related development — architecture, features, performance. My teammates are still learning Unreal; I'm the reference on the engine.</p>
+          </div>
+          <div class="highlight reveal">
+            <div class="n">▸ 02 / INTEGRATION</div>
+            <h3>gRPC into Unreal Engine.</h3>
+            <p>Integrated the gRPC protocol into a UE5 project — client-side configuration data flowing in live.</p>
+          </div>
+          <div class="highlight reveal">
+            <div class="n">▸ 03 / TECH</div>
+            <h3>MetaHuman configuration.</h3>
+            <p>Worked with MetaHuman technology to drive realistic avatar configuration across many parameters (morph targets, animations, clothing, ...).</p>
+          </div>
+          <div class="highlight reveal">
+            <div class="n">▸ 04 / DELIVERY</div>
+            <h3>Internal dataset tool.</h3>
+            <p>Delivered an <span class="hi">MVP (minimum viable product)</span> — a tool used by the team to generate datasets from MetaHuman-driven renders.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="shell">
+        <div class="section-head reveal">
+          <div class="num">/03</div>
+          <h2>Timeline</h2>
+          <div class="meta">2 years · school ⇄ company</div>
+        </div>
+
+        <div class="timeline">
+          <div class="tl-entry reveal">
+            <div class="when">Y1 · START</div>
+            <div class="tl-card">
+              <h3>Joining as UE5 expert</h3>
+              <p>Became the team's reference on Unreal. Project scaffolding, C++ baseline, MetaHuman pipeline.</p>
+            </div>
+          </div>
+          <div class="tl-entry reveal">
+            <div class="when">Y1 · MID</div>
+            <div class="tl-card">
+              <h3>Research</h3>
+              <p>Figure out how to implement gRPC and USD to our workflow and to the app. Requested by the project's manager.</p>
+            </div>
+          </div>
+          <div class="tl-entry reveal">
+            <div class="when">Y1 · END</div>
+            <div class="tl-card">
+              <h3>Implementation</h3>
+              <p>Started implementing gRPC workflow, metahuman morph targets, etc... to the UI and backend.</p>
+            </div>
+          </div>
+          <div class="tl-entry reveal">
+            <div class="when">Y2 → ONGOING</div>
+            <div class="tl-card">
+              <h3>First internal release</h3>
+              <p>Team picked up the tool and started generating datasets for internal use.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="shell">
+        <div class="card reveal" style="padding: 40px; display: flex; justify-content: space-between; gap: 24px; flex-wrap: wrap; align-items: center;">
+          <div>
+            <div class="eyebrow" style="margin-bottom: 12px;"><span class="idx">/</span> WHAT'S NEXT</div>
+            <h3 style="font-size: 24px;">I'm finishing up — and open to what's next.</h3>
+          </div>
+          <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+            <a class="btn btn-primary" href="contact.html">Get in touch <span class="arrow">→</span></a>
+            <a class="btn btn-ghost" href="games.html">See the games ↗</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div data-chrome="footer"></div>
+  <script src="assets/partials.js"></script>
+  <script src="assets/shared.js"></script>
+</body>
+</html>

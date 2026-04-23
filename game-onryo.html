@@ -1,0 +1,444 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Onryō — Alexis Martinho</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600&family=Space+Grotesk:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/styles.css" />
+  <link rel="stylesheet" href="assets/game-page.css" />
+  <style>
+    :root {
+      --o-red: #C8302A;
+      --o-red-soft: rgba(200, 48, 42, 0.12);
+      --o-ink: #07060A;
+    }
+    body { background: var(--o-ink); }
+
+    .onryo-hero {
+      background:
+        radial-gradient(900px 500px at 0% 90%, rgba(200, 48, 42, 0.1), transparent 60%),
+        linear-gradient(180deg, #07060A, #0A0708);
+      position: relative;
+    }
+    .onryo-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image: repeating-linear-gradient(90deg, rgba(255,255,255,0.03) 0 1px, transparent 1px 60px);
+      mask-image: linear-gradient(180deg, transparent, black 30%, black 70%, transparent);
+      -webkit-mask-image: linear-gradient(180deg, transparent, black 30%, black 70%, transparent);
+    }
+    .onryo-hero .kanji-bg {
+      position: absolute;
+      right: -40px; top: 50%;
+      transform: translateY(-50%);
+      font-family: var(--font-display);
+      font-size: clamp(280px, 42vw, 640px);
+      line-height: 0.8;
+      color: rgba(200, 48, 42, 0.08);
+      letter-spacing: -0.08em;
+      font-weight: 500;
+      user-select: none;
+      pointer-events: none;
+    }
+    .onryo-hero .slash-bg {
+      position: absolute;
+      top: 62%; left: -5%;
+      width: 110%; height: 3px;
+      background: linear-gradient(90deg, transparent, rgba(200, 48, 42, 0.6) 30%, rgba(228, 90, 82, 0.9), rgba(200, 48, 42, 0.6) 70%, transparent);
+      box-shadow: 0 0 30px rgba(200, 48, 42, 0.4);
+      transform: rotate(-3deg);
+    }
+    .onryo-hero h1 { color: #F3E8E6; position: relative; z-index: 3; }
+    .onryo-hero h1 .accent { color: var(--o-red); }
+    .onryo-hero .stamp {
+      position: absolute;
+      bottom: 30px; right: var(--gutter);
+      font-family: var(--font-display);
+      font-size: 16px;
+      color: var(--o-red);
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      border: 1px solid rgba(200, 48, 42, 0.5);
+      padding: 8px 14px;
+      transform: rotate(3deg);
+    }
+    .badge.red { color: var(--o-red); border-color: rgba(200, 48, 42, 0.4); background: var(--o-red-soft); }
+
+    .lang-split { display: flex; gap: 1px; margin-top: 20px; border: 1px solid var(--line); border-radius: 4px; overflow: hidden; height: 10px; }
+    .lang-split .s { height: 100%; }
+    .lang-legend { display: flex; flex-wrap: wrap; gap: 16px; margin-top: 8px; }
+    .lang-legend span { font-family: var(--font-mono); font-size: 11px; color: var(--text-dim); display: flex; align-items: center; gap: 6px; }
+    .lang-legend .dot { width: 10px; height: 10px; border-radius: 2px; }
+
+    /* Carousel */
+    .carousel-container { position: relative; margin-top: 24px; }
+    .carousel-wrapper { position: relative; overflow: hidden; border-radius: 8px; border: 1px solid var(--line); background: var(--bg-1); height: 480px; }
+    .carousel-slides { display: flex; transition: transform 400ms ease-out; height: 100%; }
+    .carousel-slide { flex: 0 0 100%; display: flex; align-items: center; justify-content: center; }
+    .carousel-slide img { max-width: 100%; max-height: 100%; width: auto; height: auto; display: block; object-fit: contain; cursor: pointer; }
+    .carousel-controls { display: flex; justify-content: space-between; align-items: center; margin-top: 16px; }
+    .carousel-nav { background: none; border: none; color: var(--text-dim); cursor: pointer; font-size: 20px; padding: 8px 12px; transition: color 200ms ease, opacity 200ms ease; }
+    .carousel-nav:hover:not(:disabled) { color: var(--o-red); }
+    .carousel-nav:disabled { opacity: 0.25; cursor: not-allowed; }
+    .carousel-indicators { display: flex; gap: 8px; }
+    .carousel-dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(255, 255, 255, 0.3); border: none; cursor: pointer; transition: background 200ms ease; }
+    .carousel-dot.active { background: var(--o-red); }
+    .carousel-counter { font-family: var(--font-mono); font-size: 12px; color: var(--text-dim); }
+    .carousel-slide img:hover { opacity: 0.95; }
+
+    /* Gallery (tech diagrams) */
+    .gallery-item {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
+      background: var(--bg-1);
+      cursor: pointer;
+      transition: border-color 200ms ease, transform 200ms ease;
+    }
+    .gallery-item:hover { border-color: var(--o-red); transform: scale(1.01); }
+    .gallery-item img { width: 100%; height: auto; display: block; transition: opacity 200ms ease; }
+    .gallery-item:hover img { opacity: 0.85; }
+
+    /* Video embed */
+    .video-embed {
+      position: relative;
+      width: 100%;
+      padding-bottom: 56.25%;
+      height: 0;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      margin-top: 8px;
+    }
+    .video-embed iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+    .videos-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 10px; }
+    @media (max-width: 800px) { .videos-grid { grid-template-columns: 1fr; } }
+    .video-label { font-family: var(--font-mono); font-size: 11px; color: var(--text-dim); letter-spacing: 0.1em; margin-bottom: 8px; text-transform: uppercase; }
+
+    /* Lightbox */
+    .lightbox { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.92); z-index: 1000; align-items: center; justify-content: center; }
+    .lightbox.active { display: flex; }
+    .lightbox-content { position: relative; max-width: 95vw; max-height: 95vh; }
+    .lightbox-img { width: 100%; height: auto; max-height: 90vh; object-fit: contain; border-radius: 8px; }
+    .lightbox-close { position: absolute; top: -40px; right: 0; font-size: 32px; color: white; cursor: pointer; background: none; border: none; padding: 0; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; }
+    .lightbox-close:hover { color: var(--o-red); }
+  </style>
+</head>
+<body class="noise">
+  <div data-chrome="header"></div>
+
+  <main>
+    <section class="game-hero onryo-hero">
+      <div class="kanji-bg" aria-hidden="true">怨</div>
+      <div class="slash-bg" aria-hidden="true"></div>
+      <div class="shell">
+        <div class="eyebrow-line reveal">
+          <span class="eyebrow"><span class="idx">/</span> GAME 02 / 04</span>
+          <span class="status"><span class="pulse" style="background: var(--o-red); box-shadow: 0 0 0 0 rgba(200, 48, 42, 0.5);"></span> Playable on itch.io</span>
+        </div>
+        <h1 class="reveal">Onry<span class="accent">ō</span>.</h1>
+        <p class="lede reveal">
+          A first-person fast arena shooter. You play as a vengeful spirit
+          in feudal Japan — starting with no body. Possess enemies to gain
+          their weapons, stats, and inventory, then turn them against each other.
+        </p>
+        <div class="cta-row reveal">
+          <a class="btn btn-primary" href="https://al3xics.itch.io/onryo" target="_blank" rel="noopener">Play on itch.io <span class="arrow">↗</span></a>
+          <a class="btn btn-ghost" href="https://github.com/Al3xics/Onryo" target="_blank" rel="noopener">GitHub ↗</a>
+          <a class="btn btn-ghost" href="#trailers">Watch intro ↓</a>
+        </div>
+        <div class="specs reveal">
+          <div class="spec"><div class="k">Engine</div><div class="v">Unreal Engine 5</div></div>
+          <div class="spec"><div class="k">Language</div><div class="v">C++ (95.7%)</div></div>
+          <div class="spec"><div class="k">Genre</div><div class="v">Fast arena FPS</div></div>
+          <div class="spec"><div class="k">Team</div><div class="v">6 people · 2-3 months</div></div>
+        </div>
+      </div>
+      <div class="stamp">怨 · ONRYŌ · 2025</div>
+    </section>
+
+    <section class="game-body">
+      <div class="shell grid">
+        <div class="col-meta reveal">/ 01 — OVERVIEW</div>
+        <div class="reveal">
+          <h2>No body. Many bodies.</h2>
+          <p>
+            You start as a pure spirit — no body, no weapons, no way to fight directly.
+            To survive in the arena, you must possess enemies and use their bodies against each other.
+            Every enemy type plays differently: their weapons, stats, and behavior are their own.
+          </p>
+          <p>
+            Built over 2-3 months by a team of 6 in Unreal Engine 5 with C++.
+            I touched almost every part of the codebase — possession system, FPS mechanics,
+            character controllers, UI/HUD, and enemy AI integration.
+          </p>
+          <div class="badges" style="margin-top: 20px;">
+            <span class="badge red">UE5</span>
+            <span class="badge">C++</span>
+            <span class="badge">Possession system</span>
+            <span class="badge">FPS mechanics</span>
+            <span class="badge">AI Controller</span>
+            <span class="badge">State machines</span>
+          </div>
+          <div style="margin-top: 28px;">
+            <div class="eyebrow" style="margin-bottom: 10px"><span class="idx">▸</span> LANGUAGE BREAKDOWN</div>
+            <div class="lang-split">
+              <div class="s" style="width: 95.7%; background: var(--o-red)"></div>
+              <div class="s" style="width: 2.3%; background: oklch(0.72 0.15 258)"></div>
+              <div class="s" style="width: 2%; background: var(--warn)"></div>
+            </div>
+            <div class="lang-legend">
+              <span><span class="dot" style="background: var(--o-red)"></span> C++ 95.7%</span>
+              <span><span class="dot" style="background: oklch(0.72 0.15 258)"></span> C# 2.3%</span>
+              <span><span class="dot" style="background: var(--warn)"></span> C 2%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="game-body" id="screenshots">
+      <div class="shell grid">
+        <div class="col-meta reveal">/ 02 — SCREENSHOTS</div>
+        <div class="reveal">
+          <h2>Arena · possession · combat.</h2>
+          <div class="carousel-container">
+            <div class="carousel-wrapper">
+              <div class="carousel-slides" id="carouselSlides">
+                <div class="carousel-slide" data-full="assets/img/onryo/onryo_1.png" data-alt="Onryō — Screenshot 1">
+                  <img src="assets/img/onryo/onryo_1.png" alt="Onryō — Screenshot 1" loading="lazy" />
+                </div>
+                <div class="carousel-slide" data-full="assets/img/onryo/onryo_2.png" data-alt="Onryō — Screenshot 2">
+                  <img src="assets/img/onryo/onryo_2.png" alt="Onryō — Screenshot 2" loading="lazy" />
+                </div>
+                <div class="carousel-slide" data-full="assets/img/onryo/onryo_3.png" data-alt="Onryō — Screenshot 3">
+                  <img src="assets/img/onryo/onryo_3.png" alt="Onryō — Screenshot 3" loading="lazy" />
+                </div>
+                <div class="carousel-slide" data-full="assets/img/onryo/onryo_4.png" data-alt="Onryō — Screenshot 4">
+                  <img src="assets/img/onryo/onryo_4.png" alt="Onryō — Screenshot 4" loading="lazy" />
+                </div>
+                <div class="carousel-slide" data-full="assets/img/onryo/onryo_5.png" data-alt="Onryō — Screenshot 5">
+                  <img src="assets/img/onryo/onryo_5.png" alt="Onryō — Screenshot 5" loading="lazy" />
+                </div>
+              </div>
+            </div>
+            <div class="carousel-controls">
+              <button class="carousel-nav" id="prevBtn" onclick="changeSlide(-1)">← Previous</button>
+              <div class="carousel-indicators" id="carouselDots"></div>
+              <button class="carousel-nav" id="nextBtn" onclick="changeSlide(1)">Next →</button>
+            </div>
+            <div style="text-align: center; margin-top: 12px;">
+              <span class="carousel-counter"><span id="currentSlide">1</span> / <span id="totalSlides">5</span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="game-body" id="trailers">
+      <div class="shell grid">
+        <div class="col-meta reveal">/ 03 — VIDEOS</div>
+        <div class="reveal">
+          <h2>See it in motion.</h2>
+          <div class="videos-grid">
+            <div>
+              <div class="video-label">// Intro cinematic</div>
+              <div class="video-embed">
+                <iframe src="https://www.youtube.com/embed/Z4lanWCPNc0" title="Onryō Intro" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+              </div>
+            </div>
+            <div>
+              <div class="video-label">// Gameplay footage</div>
+              <div class="video-embed">
+                <iframe src="https://www.youtube.com/embed/vS6ohU32nXc" title="Onryō Gameplay" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="game-body">
+      <div class="shell grid">
+        <div class="col-meta reveal">/ 04 — ARCHITECTURE</div>
+        <div class="reveal">
+          <h2>How it's built.</h2>
+
+          <h3 style="margin-top: 32px; font-size: 18px; color: var(--o-red);">Possession — shared logic, split responsibilities</h3>
+          <p>
+            The core design challenge was: how do you let the player inhabit any enemy
+            without duplicating or branching logic for every character type?
+          </p>
+          <p>
+            The answer was a clean split of responsibilities. Everything common to both
+            the player and any possessed enemy — movement, jump, look, possess,
+            unpossess — lives in the <strong>PlayerController</strong>. It's always available
+            the moment possession happens, regardless of which body is being controlled.
+          </p>
+          <p>
+            Everything specific to an enemy type — their particular attack, ability,
+            or behavior — is implemented directly in the <strong>enemy's Pawn</strong>.
+            This way, the same Pawn works under two control sources without branching:
+            the PlayerController drives it when possessed, the AIController drives it
+            when not. Shared logic stays in one place, specific logic stays where it belongs.
+          </p>
+
+          <h3 style="margin-top: 32px; font-size: 18px; color: var(--o-red);">Enemy behavior — shared structure, different logic</h3>
+          <p>
+            Each enemy type has its own state machine, which runs whether the enemy
+            is AI-controlled or player-possessed. This keeps behavior rules consistent
+            and avoids duplicating code across control sources.
+          </p>
+          <p>
+            The two enemy types — <strong>Base</strong> and <strong>Sentinel</strong> — share
+            the same exit conditions (dead or player dead) and stun state, but differ
+            in their core loop. The Base actively pursues the player: it focuses,
+            moves toward them, and shoots when in range. The Sentinel first moves to
+            a fixed patrol spot before locking onto and engaging the player from position.
+            Both can be interrupted by a stun at any point in their loop.
+          </p>
+
+          <!-- Diagram 1: Enemy Base -->
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 20px;">
+            <div>
+              <div class="gallery-item" data-full="assets/img/onryo/onryo_tech_1.png" data-alt="Onryō — Enemy Base behavior tree" style="background: #f8f8f8;">
+                <img src="assets/img/onryo/onryo_tech_1.png" alt="Onryō — Enemy Base behavior tree" loading="lazy" style="width:100%; height:auto; display:block;" />
+              </div>
+              <p style="font-family: var(--font-mono); font-size: 11px; color: var(--text-faint); margin-top: 8px; letter-spacing: 0.08em;">// Enemy Base — focus → move → shoot</p>
+            </div>
+            <div>
+              <div class="gallery-item" data-full="assets/img/onryo/onryo_tech_2.png" data-alt="Onryō — Enemy Sentinel behavior tree" style="background: #f8f8f8;">
+                <img src="assets/img/onryo/onryo_tech_2.png" alt="Onryō — Enemy Sentinel behavior tree" loading="lazy" style="width:100%; height:auto; display:block;" />
+              </div>
+              <p style="font-family: var(--font-mono); font-size: 11px; color: var(--text-faint); margin-top: 8px; letter-spacing: 0.08em;">// Enemy Sentinel — patrol spot → focus → shoot</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <section class="game-body">
+      <div class="shell grid">
+        <div class="col-meta reveal">/ 05 — TECH HIGHLIGHTS</div>
+        <div>
+          <h2 class="reveal">Under the hood.</h2>
+          <ul class="tech-list reveal">
+            <li><span class="n">01</span><span class="t">UE5 + C++ — full gameplay architecture, 95.7% C++.</span></li>
+            <li><span class="n">02</span><span class="t">Possession via PlayerController transfer — no logic duplication across character types.</span></li>
+            <li><span class="n">03</span><span class="t">Dual control source — same character class works under AIController or PlayerController.</span></li>
+            <li><span class="n">04</span><span class="t">Per-enemy state machines — Base (pursue & shoot) and Sentinel (patrol then engage).</span></li>
+            <li><span class="n">05</span><span class="t">Shared stun state — interruptible at any point in the enemy behavior loop.</span></li>
+            <li><span class="n">06</span><span class="t">FPS mechanics — responsive movement, shooting, melee, per-class tuning in C++.</span></li>
+            <li><span class="n">07</span><span class="t">UI / HUD — in-game interface reflecting current possessed body and state.</span></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="shell">
+        <div class="links-block">
+          <a href="https://al3xics.itch.io/onryo" target="_blank" rel="noopener">
+            <div class="k">↗ PLAY</div>
+            <div class="v">itch.io / onryo</div>
+          </a>
+          <a href="https://github.com/Al3xics/Onryo" target="_blank" rel="noopener">
+            <div class="k">↗ SOURCE</div>
+            <div class="v">github.com / Al3xics / Onryo</div>
+          </a>
+          <a href="https://youtu.be/Z4lanWCPNc0" target="_blank" rel="noopener">
+            <div class="k">↗ VIDEO</div>
+            <div class="v">YouTube intro</div>
+          </a>
+        </div>
+        <div class="next-prev">
+          <a href="game-gollumgo.html">
+            <div class="k">← PREV · 01</div>
+            <div class="v">GollumGO</div>
+          </a>
+          <a href="game-wendogo.html" class="right">
+            <div class="k">NEXT · 03 →</div>
+            <div class="v">Wendogo</div>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div data-chrome="footer"></div>
+
+  <!-- Lightbox -->
+  <div id="lightbox" class="lightbox">
+    <div class="lightbox-content">
+      <button class="lightbox-close" onclick="closeLightbox()">&times;</button>
+      <img id="lightbox-img" class="lightbox-img" src="" alt="" />
+    </div>
+  </div>
+
+  <script src="assets/partials.js"></script>
+  <script src="assets/shared.js"></script>
+  <script>
+    // Carousel
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.carousel-slide');
+    const totalSlides = slides.length;
+    const carouselSlides = document.getElementById('carouselSlides');
+    const dotsContainer = document.getElementById('carouselDots');
+
+    for (let i = 0; i < totalSlides; i++) {
+      const dot = document.createElement('button');
+      dot.className = `carousel-dot ${i === 0 ? 'active' : ''}`;
+      dot.onclick = () => goToSlide(i);
+      dotsContainer.appendChild(dot);
+    }
+    document.getElementById('totalSlides').textContent = totalSlides;
+    updateCarousel();
+
+    function updateCarousel() {
+      carouselSlides.style.transform = `translateX(-${currentSlide * 100}%)`;
+      document.querySelectorAll('.carousel-dot').forEach((dot, index) => {
+        dot.classList.toggle('active', index === currentSlide);
+      });
+      document.getElementById('currentSlide').textContent = currentSlide + 1;
+      document.getElementById('prevBtn').disabled = currentSlide === 0;
+      document.getElementById('nextBtn').disabled = currentSlide === totalSlides - 1;
+    }
+
+    function changeSlide(n) {
+      currentSlide = Math.max(0, Math.min(currentSlide + n, totalSlides - 1));
+      updateCarousel();
+    }
+
+    function goToSlide(n) {
+      currentSlide = n;
+      updateCarousel();
+    }
+
+    // Lightbox
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+    document.querySelectorAll('.carousel-slide img').forEach(img => {
+      img.addEventListener('click', () => {
+        const slide = img.closest('.carousel-slide');
+        lightboxImg.src = slide.dataset.full;
+        lightboxImg.alt = slide.dataset.alt || '';
+        lightbox.classList.add('active');
+      });
+    });
+    document.querySelectorAll('.gallery-item').forEach(item => {
+      item.addEventListener('click', () => {
+        lightboxImg.src = item.dataset.full;
+        lightboxImg.alt = item.dataset.alt || '';
+        lightbox.classList.add('active');
+      });
+    });
+    function closeLightbox() { lightbox.classList.remove('active'); }
+    lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+  </script>
+</body>
+</html>
