@@ -122,6 +122,7 @@ p { margin: 0 0 1em; text-wrap: pretty; max-width: 64ch; }
    ========================== */
 
 .shell {
+  width: 100%;
   max-width: var(--shell-max);
   margin: 0 auto;
   padding: 0 var(--gutter);
@@ -215,6 +216,64 @@ p { margin: 0 0 1em; text-wrap: pretty; max-width: 64ch; }
   color: var(--text-hi);
   background: var(--bg-2);
   box-shadow: inset 0 0 0 1px var(--line);
+}
+
+/* Hamburger button */
+.nav-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 38px;
+  height: 38px;
+  padding: 8px;
+  background: var(--bg-2);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  margin-left: auto;
+  flex-shrink: 0;
+}
+.nav-toggle span {
+  display: block;
+  height: 2px;
+  background: var(--text-hi);
+  border-radius: 2px;
+  transition: transform 240ms ease, opacity 240ms ease, width 240ms ease;
+  transform-origin: center;
+}
+.nav-toggle.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+.nav-toggle.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+.nav-toggle.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+@media (max-width: 700px) {
+  :root { --gutter: 18px; }
+  .brand .tag { display: none; }
+  .brand { flex-shrink: 1; min-width: 0; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+  .nav-toggle { display: flex; margin-left: auto; flex-shrink: 0; }
+  .nav {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    gap: 0;
+    background: rgba(9, 9, 11, 0.97);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--line);
+    padding: 8px 0 12px;
+  }
+  .nav.open { display: flex; z-index: 200; }
+  .nav a {
+    padding: 12px 24px;
+    border-radius: 0;
+    border-bottom: 1px solid var(--line);
+    font-size: 13px;
+  }
+  .nav a:last-child { border-bottom: none; }
+  .topbar { position: sticky; }
 }
 
 /* ==========================

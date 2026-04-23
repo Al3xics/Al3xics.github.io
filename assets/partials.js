@@ -19,7 +19,10 @@
             <span>alexis.martinho</span>
             <span class="tag">/ gameplay programmer</span>
           </a>
-          <nav class="nav">
+          <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">
+            <span></span><span></span><span></span>
+          </button>
+          <nav class="nav" id="mainNav">
             ${NAV.map(([h, l]) => `<a href="${h}">${l}</a>`).join('')}
           </nav>
         </div>
@@ -61,5 +64,24 @@
     if (foot) foot.outerHTML = footer();
   };
 
-  document.addEventListener('DOMContentLoaded', () => window.mountChrome());
+  document.addEventListener('DOMContentLoaded', () => {
+    window.mountChrome();
+
+    const toggle = document.getElementById('navToggle');
+    const nav = document.getElementById('mainNav');
+    if (toggle && nav) {
+      toggle.addEventListener('click', () => {
+        const open = nav.classList.toggle('open');
+        toggle.classList.toggle('open', open);
+        toggle.setAttribute('aria-expanded', open);
+      });
+      document.addEventListener('click', e => {
+        if (!toggle.contains(e.target) && !nav.contains(e.target)) {
+          nav.classList.remove('open');
+          toggle.classList.remove('open');
+          toggle.setAttribute('aria-expanded', 'false');
+        }
+      });
+    }
+  });
 })();

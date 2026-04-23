@@ -61,7 +61,8 @@
       display: grid;
       grid-template-columns: 240px 1fr;
       gap: 48px;
-      padding: var(--r-6) 0;
+      padding-top: var(--r-6);
+      padding-bottom: var(--r-6);
     }
     @media (max-width: 900px) { .narrative { grid-template-columns: 1fr; } }
     .narrative h2 { font-size: 26px; margin-bottom: 14px; }
@@ -88,14 +89,27 @@
     @media (max-width: 900px) { .skill-grid { grid-template-columns: 1fr; } }
     .skill-row {
       display: grid;
-      grid-template-columns: 220px 1fr 80px;
-      gap: 20px;
+      grid-template-columns: 1fr 80px;
+      grid-template-rows: auto auto;
+      gap: 10px 16px;
       padding: 16px 20px;
       border: 1px solid var(--line);
       border-radius: 6px;
       background: var(--bg-1);
       align-items: center;
       transition: border-color 200ms ease, background 200ms ease;
+    }
+    .skill-row .name { align-self: center; }
+    .skill-row .bar { grid-column: 1 / -1; grid-row: 2; }
+    .skill-row .val { grid-row: 1; justify-self: end; }
+    @media (min-width: 640px) {
+      .skill-row {
+        grid-template-columns: 220px 1fr 80px;
+        grid-template-rows: auto;
+        gap: 20px;
+      }
+      .skill-row .bar { grid-column: auto; grid-row: auto; }
+      .skill-row .val { grid-row: auto; justify-self: auto; }
     }
     .skill-row:hover { border-color: var(--accent-line); background: var(--bg-2); }
     .skill-row .name {

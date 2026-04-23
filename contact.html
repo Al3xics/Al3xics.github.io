@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="assets/styles.css" />
   <style>
     .c-hero { padding: 100px 0 48px; }
-    .c-hero h1 { font-size: clamp(52px, 8vw, 120px); line-height: 0.95; letter-spacing: -0.03em; }
+    .c-hero h1 { font-size: clamp(40px, 8vw, 120px); line-height: 0.95; letter-spacing: -0.03em; }
     .c-hero h1 em { color: var(--accent); font-style: normal; }
     .c-hero .lede { margin-top: 30px; max-width: 56ch; font-size: 18px; color: var(--text); }
 
@@ -66,6 +66,11 @@
       font-family: var(--font-mono); font-size: 14px; color: var(--text-faint);
     }
     .contact-methods a:hover .arrow { color: var(--accent); }
+    @media (max-width: 700px) {
+      .contact-methods a { grid-template-columns: 44px 1fr auto; gap: 14px; padding: 16px 18px; }
+      .contact-methods .meta { min-width: 0; }
+      .contact-methods .meta .v { font-size: 13px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    }
 
     .side-panel {
       border: 1px solid var(--line);
