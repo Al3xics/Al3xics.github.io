@@ -13,7 +13,7 @@
     .alt-hero { padding: 80px 0 48px; border-bottom: 1px solid var(--line); position: relative; overflow: hidden; }
     .alt-hero h1 { font-size: clamp(48px, 7vw, 92px); line-height: 0.95; letter-spacing: -0.03em; }
     .alt-hero h1 em { color: var(--accent); font-style: normal; }
-    .alt-hero .lede { margin-top: 24px; max-width: 58ch; font-size: 17px; color: var(--text); }
+    .alt-hero .lede { margin-top: 24px; max-width: 62ch; font-size: 17px; color: var(--text); }
 
     /* Timeline */
     .timeline {
@@ -159,6 +159,62 @@
       font-family: var(--font-mono); font-size: 12px; color: var(--text-dim);
       margin-top: 2px;
     }
+
+    /* Reference gallery */
+    .ref-gallery {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 24px;
+    }
+    @media (max-width: 800px) { .ref-gallery { grid-template-columns: 1fr; } }
+    .gallery-item {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
+      background: var(--bg-1);
+      cursor: pointer;
+      transition: border-color 200ms ease, transform 200ms ease;
+    }
+    .gallery-item:hover { border-color: var(--accent); transform: scale(1.01); }
+    .gallery-item img { width: 100%; height: auto; display: block; transition: opacity 200ms ease; }
+    .gallery-item:hover img { opacity: 0.85; }
+    .ref-caption {
+      font-family: var(--font-mono); font-size: 11px; color: var(--text-faint);
+      margin-top: 8px; letter-spacing: 0.06em;
+    }
+    .source-note {
+      margin-top: 22px;
+      padding: 16px 20px;
+      border: 1px solid var(--line);
+      border-left: 2px solid var(--accent-line);
+      border-radius: 6px;
+      background: var(--bg-1);
+      font-size: 14px;
+      color: var(--text);
+    }
+    .source-note a { color: var(--accent); text-decoration: none; }
+    .source-note a:hover { text-decoration: underline; }
+
+    /* Lightbox */
+    .lightbox { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.92); z-index: 1000; align-items: center; justify-content: center; }
+    .lightbox.active { display: flex; }
+    .lightbox-content { position: relative; max-width: 92vw; max-height: 95vh; }
+    .lightbox-img { width: 100%; height: auto; max-height: 88vh; object-fit: contain; border-radius: 8px; }
+    .lightbox-close { position: absolute; top: -40px; right: 0; font-size: 32px; color: white; cursor: pointer; background: none; border: none; padding: 0; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; }
+    .lightbox-close:hover { color: var(--accent); }
+    .lightbox-nav { position: fixed; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); color: rgba(255,255,255,0.7); font-size: 20px; cursor: pointer; width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: background 200ms, color 200ms; top: 50%; transform: translateY(-50%); z-index: 1001; }
+    .lightbox-nav#lightboxPrev { left: 20px; }
+    .lightbox-nav#lightboxNext { right: 20px; }
+    .lightbox-nav:hover:not(:disabled) { background: rgba(255,255,255,0.18); color: #fff; }
+    .lightbox-nav:disabled { opacity: 0.2; cursor: not-allowed; }
+    @media (max-width: 700px) {
+      .lightbox-content { padding-bottom: 60px; }
+      .lightbox-nav { position: absolute; top: auto; bottom: 10px; transform: none; }
+      .lightbox-nav#lightboxPrev { left: 20px; }
+      .lightbox-nav#lightboxNext { right: 20px; }
+    }
+    .lightbox-counter { position: absolute; bottom: -28px; left: 0; right: 0; text-align: center; font-family: var(--font-mono); font-size: 12px; color: rgba(255,255,255,0.4); }
   </style>
 </head>
 <body class="noise">
@@ -168,19 +224,22 @@
     <section class="alt-hero">
       <div class="shell">
         <div class="eyebrow reveal" style="margin-bottom: 20px"><span class="idx">/</span> 005 — ALTERNANCE</div>
-        <h1 class="reveal">Two years as the<br><em>UE5 expert</em> on my team.</h1>
+        <h1 class="reveal">Two years as the<br><em>UE5 lead</em> on an international team.</h1>
         <p class="lede reveal">
-          A 2-year alternance program, alternating between school and
-          professional work. I'm the Unreal Engine 5 expert on my team —
-          Working on a MetaHuman configuration tool, driven over
-          gRPC, built to generate datasets. My teammates are still ramping
-          up on Unreal, and I'm their go-to on the engine.
+          A 2-year alternance, alternating between school and professional
+          work inside Aumovio's 3D Real-Time team — an international team
+          spread across Germany, France and the USA, reporting to a German
+          project manager. I'm the Unreal Engine 5 reference for the team:
+          owning the engine, merging PRs and onboarding teammates who are
+          still ramping up on Unreal. Across two missions — a real-time
+          in-cabin simulation &amp; synthetic-data-generation tool, and an
+          Apple Vision Pro XR port.
         </p>
 
         <div class="company-row reveal">
           <div>
             <div class="name">Aumovio <span class="dim" style="font-weight: 400; font-size: 14px;">(formerly part of Continental)</span></div>
-            <div class="sub">Unreal Engine Developer · Gameplay Programmer · 2Y alternance</div>
+            <div class="sub">Unreal Engine 5 Developer · Gameplay Programmer · 3D Real-Time Team · Rambouillet · Jan 2025 – Sep 2026</div>
           </div>
           <span class="status"><span class="pulse"></span> Active · Y2</span>
         </div>
@@ -192,20 +251,28 @@
         <div class="section-head reveal">
           <div class="num">/01</div>
           <h2>The mission</h2>
-          <div class="meta">MetaHuman · gRPC · UE5</div>
+          <div class="meta">UE5 · C++ · MetaHuman · gRPC · MRQ</div>
         </div>
 
         <div class="mission">
           <div class="reveal">
-            <h2 style="font-size: 26px;">A MetaHuman config &amp; dataset-gen tool.</h2>
+            <h2 style="font-size: 26px;">In-cabin simulation &amp; synthetic dataset generation.</h2>
             <p>
-              I am building an application in Unreal Engine 5 that configures and animates
-              a MetaHuman avatar using a large range of parameters.
+              I build a real-time vehicle-interior (in-cabin) simulation tool in
+              Unreal Engine 5. It configures <span class="hi">MetaHuman</span> avatars —
+              clothing, hair, blend shapes and animations — inside virtual cabin
+              environments, with controllable lighting and accident / distraction scenarios.
             </p>
             <p>
-              The app communicates via <span class="hi">gRPC</span> and/or a <span class="hi">UI</span> to the json config file
-              to receive configuration data from an external service, then uses those parameters
-              to drive the MetaHuman and generate datasets — used internally by the team.
+              The app receives its configuration over <span class="hi">gRPC</span> (Protocol
+              Buffers) and/or a <span class="hi">UI</span>, written to a json config that drives
+              the scene. It then renders synthetic datasets via <span class="hi">Movie Render
+              Queue (MRQ)</span> — used to train the cabin-sensing AI models behind automotive
+              in-cabin cameras.
+            </p>
+            <p>
+              I work cross-functionally with the AI, data-analysis and sensor teams to make
+              sure the generated data fits what the models actually need.
             </p>
             <div class="badges" style="margin-top: 20px;">
               <span class="badge accent">UE5</span>
@@ -213,6 +280,8 @@
               <span class="badge">Blueprints</span>
               <span class="badge">MetaHuman</span>
               <span class="badge">gRPC</span>
+              <span class="badge">USD</span>
+              <span class="badge">MRQ</span>
               <span class="badge">json</span>
             </div>
           </div>
@@ -240,18 +309,18 @@
               <div class="row">
                 <span class="node">MetaHuman</span>
                 <span class="arr">/</span>
-                <span class="node">UI</span>
+                <span class="node">cabin</span>
                 <span class="arr">/</span>
-                <span class="node">...</span>
+                <span class="node">UI</span>
               </div>
               <div class="row">
-                <span class="arr">↓ render</span>
+                <span class="arr">↓ render (MRQ)</span>
               </div>
               <div class="row">
-                <span class="node accent">dataset</span>
+                <span class="node accent">synthetic dataset</span>
               </div>
               <div class="label" style="margin-top: 18px;">▸ ROLE</div>
-              <div style="color: var(--text); padding: 4px 0;">UE5 expert / lead on team</div>
+              <div style="color: var(--text); padding: 4px 0;">UE5 reference / lead on team</div>
             </div>
           </div>
         </div>
@@ -262,30 +331,44 @@
       <div class="shell">
         <div class="section-head reveal">
           <div class="num">/02</div>
-          <h2>Highlights</h2>
-          <div class="meta">what I own</div>
+          <h2>Cabin sensing</h2>
+          <div class="meta">the product it feeds</div>
         </div>
 
-        <div class="highlights">
-          <div class="highlight reveal">
-            <div class="n">▸ 01 / OWNERSHIP</div>
-            <h3>UE5 expert on the team.</h3>
-            <p>Leading Unreal-related development — architecture, features, performance. My teammates are still learning Unreal; I'm the reference on the engine.</p>
+        <div class="reveal">
+          <p style="font-size: 16px; color: var(--text); max-width: 62ch;">
+            The synthetic datasets my tool renders are used to train cabin-sensing
+            models — driver and occupant monitoring, distraction and drowsiness
+            detection, well-being functions. Below are visuals from Aumovio's
+            Cabin Sensing product page; I build the UE5 tool that generates the
+            training data behind systems like these.
+          </p>
+
+          <div class="ref-gallery">
+            <div>
+              <div class="gallery-item" data-full="assets/img/aumovio/aumovio-project.png" data-alt="Aumovio Cabin Sensing — precise cabin monitoring">
+                <img src="assets/img/aumovio/aumovio-project.png" alt="Aumovio Cabin Sensing — precise cabin monitoring" loading="lazy" />
+              </div>
+              <p class="ref-caption">// Cabin sensing — skeletal tracking of every occupant</p>
+            </div>
+            <div>
+              <div class="gallery-item" data-full="assets/img/aumovio/aumovio-img1.png" data-alt="Aumovio Cabin Sensing — use cases">
+                <img src="assets/img/aumovio/aumovio-img1.png" alt="Aumovio Cabin Sensing — use cases" loading="lazy" />
+              </div>
+              <p class="ref-caption">// Use cases — 25+ driver &amp; occupant monitoring functions</p>
+            </div>
+            <div>
+              <div class="gallery-item" data-full="assets/img/aumovio/aumovio-img2.png" data-alt="Aumovio Cabin Sensing — benefits">
+                <img src="assets/img/aumovio/aumovio-img2.png" alt="Aumovio Cabin Sensing — benefits" loading="lazy" />
+              </div>
+              <p class="ref-caption">// Scalable, regulation-ready (Euro NCAP, EU-GSR)</p>
+            </div>
           </div>
-          <div class="highlight reveal">
-            <div class="n">▸ 02 / INTEGRATION</div>
-            <h3>gRPC into Unreal Engine.</h3>
-            <p>Integrated the gRPC protocol into a UE5 project — client-side configuration data flowing in live.</p>
-          </div>
-          <div class="highlight reveal">
-            <div class="n">▸ 03 / TECH</div>
-            <h3>MetaHuman configuration.</h3>
-            <p>Worked with MetaHuman technology to drive realistic avatar configuration across many parameters (morph targets, animations, clothing, ...).</p>
-          </div>
-          <div class="highlight reveal">
-            <div class="n">▸ 04 / DELIVERY</div>
-            <h3>Internal dataset tool.</h3>
-            <p>Delivered an <span class="hi">MVP (minimum viable product)</span> — a tool used by the team to generate datasets from MetaHuman-driven renders.</p>
+
+          <div class="source-note">
+            ↗ Product page:
+            <a href="https://www.aumovio.com/en/solutions/software-defined-mobility/software-solutions/cabin-sensing.html" target="_blank" rel="noopener">aumovio.com — Cabin Sensing</a>
+            <span style="color: var(--text-faint);">— visuals © Aumovio. I develop the new UE5 simulation &amp; synthetic-data tool that feeds models like these.</span>
           </div>
         </div>
       </div>
@@ -295,37 +378,124 @@
       <div class="shell">
         <div class="section-head reveal">
           <div class="num">/03</div>
+          <h2>XR — Apple Vision Pro</h2>
+          <div class="meta">Unity 6 · PolySpatial · visionOS</div>
+        </div>
+
+        <div class="mission" style="grid-template-columns: 1fr;">
+          <div class="reveal">
+            <h2 style="font-size: 26px;">Porting an interactive XR app to Apple Vision Pro.</h2>
+            <p>
+              My first mission, over the opening 3–4 months of the alternance: transposing
+              an interactive Meta Quest XR app to <span class="hi">Apple Vision Pro</span>
+              using Unity &amp; PolySpatial in Hybrid mode — a real-time, interactive
+              vehicle-interior customisation experience. I then moved onto the in-cabin
+              simulation tool, where I've spent the rest of my time.
+            </p>
+            <p>
+              visionOS / PolySpatial is young, so much of the work was solving novel platform
+              problems: <span class="hi">Near/Far Interactor</span> input, shader compatibility
+              and rendering differences. I shared the solutions I found on the Unity community
+              forums for other developers hitting the same walls.
+            </p>
+            <div class="badges" style="margin-top: 20px;">
+              <span class="badge accent">Unity 6</span>
+              <span class="badge">C#</span>
+              <span class="badge">PolySpatial</span>
+              <span class="badge">visionOS</span>
+              <span class="badge">XR</span>
+              <span class="badge">Shaders</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="shell">
+        <div class="section-head reveal">
+          <div class="num">/04</div>
+          <h2>Highlights</h2>
+          <div class="meta">what I own</div>
+        </div>
+
+        <div class="highlights">
+          <div class="highlight reveal">
+            <div class="n">▸ 01 / OWNERSHIP</div>
+            <h3>UE5 reference for the team.</h3>
+            <p>Technical lead on Unreal for a team of 4 (1 dev, 1 designer, 1 3D artist, 1 intern) — reviewing and merging PRs, owning engine decisions and onboarding teammates still ramping up on UE5.</p>
+          </div>
+          <div class="highlight reveal">
+            <div class="n">▸ 02 / R&amp;D</div>
+            <h3>gRPC + USD in Unreal.</h3>
+            <p>Researched and integrated gRPC (Protocol Buffers) and the USD plugin into UE5 — fixed a critical Shipping-build mesh bug and published the solution on the Unreal Engine community forums.</p>
+          </div>
+          <div class="highlight reveal">
+            <div class="n">▸ 03 / TECH</div>
+            <h3>MetaHuman → synthetic data.</h3>
+            <p>Drove MetaHuman avatars across many parameters (blend shapes, animations, hair, clothing) inside virtual cabins, then rendered synthetic datasets via Movie Render Queue to train cabin-sensing AI.</p>
+          </div>
+          <div class="highlight reveal">
+            <div class="n">▸ 04 / XR</div>
+            <h3>Apple Vision Pro port.</h3>
+            <p>Ported an interactive Meta Quest XR experience to Apple Vision Pro with Unity &amp; PolySpatial — solving novel visionOS challenges (Near/Far Interactor, shaders) and sharing fixes on the Unity forums.</p>
+          </div>
+          <div class="highlight reveal">
+            <div class="n">▸ 05 / COLLABORATION</div>
+            <h3>Cross-functional &amp; international.</h3>
+            <p>Worked across the AI, data-analysis and sensor teams in an Agile, international setup (Germany / France / USA), reporting to a German project manager.</p>
+          </div>
+          <div class="highlight reveal">
+            <div class="n">▸ 06 / DOCUMENTATION</div>
+            <h3>Full Confluence docs.</h3>
+            <p>Delivered complete Confluence documentation of the pipeline and the gRPC/USD work, so the team and future contributors can build on it.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="shell">
+        <div class="section-head reveal">
+          <div class="num">/05</div>
           <h2>Timeline</h2>
-          <div class="meta">2 years · school ⇄ company</div>
+          <div class="meta">Jan 2025 – Sep 2026 · school ⇄ company</div>
         </div>
 
         <div class="timeline">
           <div class="tl-entry reveal">
-            <div class="when">Y1 · START</div>
+            <div class="when">Y1 · START · ~3–4 MO</div>
             <div class="tl-card">
-              <h3>Joining as UE5 expert</h3>
-              <p>Became the team's reference on Unreal. Project scaffolding, C++ baseline, MetaHuman pipeline.</p>
+              <h3>Apple Vision Pro port</h3>
+              <p>My first mission: transposing an interactive XR app from Meta Quest to Apple Vision Pro with Unity &amp; PolySpatial, solving novel visionOS rendering and interaction challenges.</p>
+            </div>
+          </div>
+          <div class="tl-entry reveal">
+            <div class="when">Y1</div>
+            <div class="tl-card">
+              <h3>Moving onto in-cabin · UE5 reference</h3>
+              <p>Switched to the in-cabin simulation tool and became the team's go-to on Unreal. Project scaffolding, C++ baseline, MetaHuman pipeline and onboarding teammates onto the engine.</p>
             </div>
           </div>
           <div class="tl-entry reveal">
             <div class="when">Y1 · MID</div>
             <div class="tl-card">
-              <h3>Research</h3>
-              <p>Figure out how to implement gRPC and USD to our workflow and to the app. Requested by the project's manager.</p>
+              <h3>Research — gRPC &amp; USD</h3>
+              <p>Figured out how to bring gRPC and the USD plugin into our UE5 workflow, at the project manager's request, including fixing a critical Shipping-build mesh bug.</p>
             </div>
           </div>
           <div class="tl-entry reveal">
             <div class="when">Y1 · END</div>
             <div class="tl-card">
               <h3>Implementation</h3>
-              <p>Started implementing gRPC workflow, metahuman morph targets, etc... to the UI and backend.</p>
+              <p>Built out the gRPC workflow, MetaHuman blend shapes/animations and the MRQ render path across the UI and backend.</p>
             </div>
           </div>
           <div class="tl-entry reveal">
             <div class="when">Y2 → ONGOING</div>
             <div class="tl-card">
-              <h3>First internal release</h3>
-              <p>Team picked up the tool and started generating datasets for internal use.</p>
+              <h3>Internal dataset tool in use</h3>
+              <p>The team picked up the simulation tool and started generating synthetic datasets for internal use, with full Confluence documentation delivered.</p>
             </div>
           </div>
         </div>
@@ -337,7 +507,7 @@
         <div class="card reveal" style="padding: 40px; display: flex; justify-content: space-between; gap: 24px; flex-wrap: wrap; align-items: center;">
           <div>
             <div class="eyebrow" style="margin-bottom: 12px;"><span class="idx">/</span> WHAT'S NEXT</div>
-            <h3 style="font-size: 24px;">I'm finishing up — and open to what's next.</h3>
+            <h3 style="font-size: 24px;">Available from October 2026 — open to what's next.</h3>
           </div>
           <div style="display: flex; gap: 12px; flex-wrap: wrap;">
             <a class="btn btn-primary" href="contact.html">Get in touch <span class="arrow">→</span></a>
@@ -349,7 +519,73 @@
   </main>
 
   <div data-chrome="footer"></div>
+
+  <!-- Lightbox -->
+  <div id="lightbox" class="lightbox">
+    <button class="lightbox-nav" id="lightboxPrev" onclick="navigateLightbox(-1)">&#8592;</button>
+    <div class="lightbox-content">
+      <button class="lightbox-close" onclick="closeLightbox()">&times;</button>
+      <img id="lightbox-img" class="lightbox-img" src="" alt="" />
+      <div class="lightbox-counter" id="lightboxCounter"></div>
+    </div>
+    <button class="lightbox-nav" id="lightboxNext" onclick="navigateLightbox(1)">&#8594;</button>
+  </div>
+
   <script src="assets/partials.js"></script>
   <script src="assets/shared.js"></script>
+  <script>
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+
+    // Build one navigable group from all gallery items on the page.
+    const galleryItems = Array.from(document.querySelectorAll('.gallery-item[data-full]'));
+    const group = galleryItems.map(item => ({ src: item.dataset.full, alt: item.dataset.alt || '' }));
+    let lightboxIdx = 0;
+
+    galleryItems.forEach((item, idx) => {
+      item.addEventListener('click', () => openLightbox(idx));
+    });
+
+    function openLightbox(idx) {
+      lightboxIdx = idx;
+      updateLightbox();
+      lightbox.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function updateLightbox() {
+      const item = group[lightboxIdx];
+      lightboxImg.src = item.src;
+      lightboxImg.alt = item.alt;
+
+      const prevBtn = document.getElementById('lightboxPrev');
+      const nextBtn = document.getElementById('lightboxNext');
+      const counter = document.getElementById('lightboxCounter');
+      counter.textContent = `${lightboxIdx + 1} / ${group.length}`;
+      prevBtn.disabled = lightboxIdx === 0;
+      nextBtn.disabled = lightboxIdx === group.length - 1;
+    }
+
+    function navigateLightbox(delta) {
+      const next = lightboxIdx + delta;
+      if (next >= 0 && next < group.length) {
+        lightboxIdx = next;
+        updateLightbox();
+      }
+    }
+
+    function closeLightbox() {
+      lightbox.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
+    document.addEventListener('keydown', e => {
+      if (!lightbox.classList.contains('active')) return;
+      if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'ArrowLeft') navigateLightbox(-1);
+      if (e.key === 'ArrowRight') navigateLightbox(1);
+    });
+  </script>
 </body>
 </html>
