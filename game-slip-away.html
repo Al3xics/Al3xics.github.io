@@ -3,7 +3,12 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Myceland — Alexis Martinho</title>
+  <link rel="icon" href="favicon.ico" sizes="any" />
+  <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-32.png" />
+  <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png" />
+  <meta name="theme-color" content="#09090B" />
+  <title>Slip Away — Alexis Martinho</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600&family=Space+Grotesk:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -17,7 +22,7 @@
     }
     body { background: var(--m-soil); }
 
-    .myceland-hero {
+    .slipaway-hero {
       background:
         radial-gradient(900px 550px at 75% 35%, rgba(196, 76, 212, 0.14), transparent 60%),
         radial-gradient(700px 450px at 10% 80%, rgba(107, 143, 90, 0.14), transparent 60%),
@@ -25,7 +30,7 @@
         linear-gradient(170deg, #09080b, #0b0a09 50%, #0c0b08);
       position: relative;
     }
-    .myceland-hero::before {
+    .slipaway-hero::before {
       content: '';
       position: absolute; inset: 0;
       background-image:
@@ -36,26 +41,48 @@
       mask-image: radial-gradient(ellipse at 70% 45%, black, transparent 65%);
       -webkit-mask-image: radial-gradient(ellipse at 70% 45%, black, transparent 65%);
     }
-    .myceland-hero h1 { color: #EDE5D8; }
-    .myceland-hero h1 .accent { color: var(--m-purple); }
+    .slipaway-hero h1 { color: #EDE5D8; }
+    .slipaway-hero h1 .accent { color: var(--m-purple); }
 
     .badge.amber { color: var(--m-purple); border-color: rgba(212, 162, 76, 0.35); background: rgba(212, 162, 76, 0.07); }
 
     /* Carousel */
+    /* Flex items and grid tracks both default to a min-content minimum, so the
+       screenshots' intrinsic width (2559px) would otherwise push the whole
+       single-column layout wider than the phone viewport. */
+    .game-body .grid > * { min-width: 0; }
+    .carousel-slide { min-width: 0; }
     .carousel-container { position: relative; margin-top: 24px; }
     .carousel-wrapper { position: relative; overflow: hidden; border-radius: 8px; border: 1px solid var(--line); background: var(--bg-1); height: 480px; }
     .carousel-slides { display: flex; transition: transform 400ms ease-out; height: 100%; }
     .carousel-slide { flex: 0 0 100%; display: flex; align-items: center; justify-content: center; }
     .carousel-slide img { max-width: 100%; max-height: 100%; width: auto; height: auto; display: block; object-fit: contain; cursor: pointer; }
-    .carousel-controls { display: flex; justify-content: space-between; align-items: center; margin-top: 16px; }
+    .carousel-controls { display: flex; justify-content: space-between; align-items: center; margin-top: 16px; flex-wrap: wrap; gap: 8px; }
     .carousel-nav { background: none; border: none; color: var(--text-dim); cursor: pointer; font-size: 20px; padding: 8px 12px; transition: color 200ms ease, opacity 200ms ease; }
     .carousel-nav:hover:not(:disabled) { color: var(--m-purple); }
     .carousel-nav:disabled { opacity: 0.25; cursor: not-allowed; }
-    .carousel-indicators { display: flex; gap: 8px; }
+    .carousel-indicators { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
+    /* 19 dots plus both nav buttons do not fit one line on a phone — drop the
+       dots onto their own row underneath instead of pushing the page wider. */
+    @media (max-width: 700px) { .carousel-indicators { order: 3; flex-basis: 100%; gap: 6px; } }
     .carousel-dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(255, 255, 255, 0.3); border: none; cursor: pointer; transition: background 200ms ease; }
     .carousel-dot.active { background: var(--m-purple); }
     .carousel-counter { font-family: var(--font-mono); font-size: 12px; color: var(--text-dim); }
     .carousel-slide img:hover { opacity: 0.95; }
+
+    /* Video embed */
+    .video-embed {
+      position: relative;
+      width: 100%;
+      padding-bottom: 56.25%;
+      height: 0;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      margin-top: 8px;
+    }
+    .video-embed iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+    .video-label { font-family: var(--font-mono); font-size: 11px; color: var(--text-dim); letter-spacing: 0.1em; margin-bottom: 8px; margin-top: 20px; text-transform: uppercase; }
 
     /* Lightbox */
     .lightbox { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.92); z-index: 1000; align-items: center; justify-content: center; }
@@ -148,29 +175,29 @@
   <div data-chrome="header"></div>
 
   <main>
-    <section class="game-hero myceland-hero">
+    <section class="game-hero slipaway-hero">
       <div class="shell">
         <div class="eyebrow-line reveal">
           <span class="eyebrow"><span class="idx">/</span> GAME 04 / 04</span>
           <span class="status"><span class="pulse" style="background: var(--m-purple); box-shadow: 0 0 0 0 rgba(212, 162, 76, 0.5); animation-duration: 2s;"></span> In development</span>
         </div>
-        <h1 class="reveal">Myce<span class="accent">land</span>.</h1>
+        <h1 class="reveal">Slip <span class="accent">Away</span>.</h1>
         <p class="lede reveal">
           A puzzle narrative game set in a world destroyed by catastrophe.
-          You incarnate an avatar of the world itself — planting mushrooms,
+          You incarnate an avatar of the world itself — planting spores,
           solving puzzles, and reviving the land through a narrative
           woven across every level.
         </p>
         <div class="cta-row reveal">
           <span class="btn btn-primary" style="pointer-events:none; opacity:0.45; cursor:default;">Play on itch.io <span style="font-size:10px; letter-spacing:0.12em; opacity:0.8;">— COMING SOON</span></span>
-          <a class="btn btn-ghost" href="https://github.com/Al3xics/Myceland" target="_blank" rel="noopener">GitHub ↗</a>
+          <a class="btn btn-ghost" href="https://github.com/Al3xics/SlipAway" target="_blank" rel="noopener">GitHub ↗</a>
           <a class="btn btn-ghost" href="#trailers">Watch videos ↓</a>
         </div>
         <div class="specs reveal">
           <div class="spec"><div class="k">Engine</div><div class="v">Unreal Engine 5</div></div>
           <div class="spec"><div class="k">Language</div><div class="v">C++ (93%)</div></div>
           <div class="spec"><div class="k">Genre</div><div class="v">Puzzle / Narrative</div></div>
-          <div class="spec"><div class="k">Team</div><div class="v">9 people · ~1 year</div></div>
+          <div class="spec"><div class="k">Team</div><div class="v">8 people · ~1 year</div></div>
         </div>
       </div>
     </section>
@@ -182,13 +209,13 @@
           <h2>Revive a dying world.</h2>
           <p>
             The world is broken. You play as an avatar of the world itself — born from what
-            remains. Your tools: mushrooms that spread life across a board of tiles, puzzles
+            remains. Your tools: spores that spread life across a board of tiles, puzzles
             that unlock the land, and a narrative that unfolds level by level.
           </p>
           <p>
-            Built in Unreal Engine 5 with C++ by a team of 9 people. The project
-            started 3-4 months ago and will run for roughly a year total — we're currently
-            at the halfway point, in the polishing phase with active bug fixing on the
+            Built in Unreal Engine 5 with C++ by a team of 8 people. The project
+            started 9 months ago (beginning of 2026) and will run for roughly a year total —
+            we're currently in the polishing phase with active bug fixing on the
             programming side.
           </p>
           <p>
@@ -235,38 +262,62 @@
           <div class="carousel-container">
             <div class="carousel-wrapper">
               <div class="carousel-slides" id="carouselSlides">
-                <div class="carousel-slide" data-full="assets/img/myceland/myceland_slip.png" data-alt="Myceland — Slip">
-                  <img src="assets/img/myceland/myceland_slip.png" alt="Myceland — Slip" loading="lazy" />
+                <div class="carousel-slide" data-full="assets/img/slip_away/slip_away_1.png" data-alt="Slip Away — Title screen">
+                  <img src="assets/img/slip_away/slip_away_1.png" alt="Slip Away — Title screen" />
                 </div>
-                <div class="carousel-slide" data-full="assets/img/myceland/myceland_slip.jpg" data-alt="Myceland — Slip">
-                  <img src="assets/img/myceland/myceland_slip.jpg" alt="Myceland — Slip" loading="lazy" />
+                <div class="carousel-slide" data-full="assets/img/slip_away/slip_away_2.png" data-alt="Slip Away — Exploring the corrupted overworld">
+                  <img src="assets/img/slip_away/slip_away_2.png" alt="Slip Away — Exploring the corrupted overworld" loading="lazy" />
                 </div>
-                <div class="carousel-slide" data-full="assets/img/myceland/myceland_corrupted.jpg" data-alt="Myceland — Corrupted">
-                  <img src="assets/img/myceland/myceland_corrupted.jpg" alt="Myceland — Corrupted" loading="lazy" />
+                <div class="carousel-slide" data-full="assets/img/slip_away/slip_away_3.png" data-alt="Slip Away — Hex board: grass propagation around a spore">
+                  <img src="assets/img/slip_away/slip_away_3.png" alt="Slip Away — Hex board: grass propagation around a spore" loading="lazy" />
                 </div>
-                <div class="carousel-slide" data-full="assets/img/myceland/myceland_revived.jpg" data-alt="Myceland — Revived">
-                  <img src="assets/img/myceland/myceland_revived.jpg" alt="Myceland — Revived" loading="lazy" />
+                <div class="carousel-slide" data-full="assets/img/slip_away/slip_away_4.png" data-alt="Slip Away — Board revived after the win propagation">
+                  <img src="assets/img/slip_away/slip_away_4.png" alt="Slip Away — Board revived after the win propagation" loading="lazy" />
                 </div>
-                <div class="carousel-slide" data-full="assets/img/myceland/myceland_grass.png" data-alt="Myceland — Grass">
-                  <img src="assets/img/myceland/myceland_grass.png" alt="Myceland — Grass" loading="lazy" />
+                <div class="carousel-slide" data-full="assets/img/slip_away/slip_away_5.png" data-alt="Slip Away — Puzzle board with in-level narrative">
+                  <img src="assets/img/slip_away/slip_away_5.png" alt="Slip Away — Puzzle board with in-level narrative" loading="lazy" />
                 </div>
-                <div class="carousel-slide" data-full="assets/img/myceland/myceland_fog.png" data-alt="Myceland — Fog">
-                  <img src="assets/img/myceland/myceland_fog.png" alt="Myceland — Fog" loading="lazy" />
+                <div class="carousel-slide" data-full="assets/img/slip_away/slip_away_6.png" data-alt="Slip Away — Travelling between puzzle boards">
+                  <img src="assets/img/slip_away/slip_away_6.png" alt="Slip Away — Travelling between puzzle boards" loading="lazy" />
                 </div>
-                <div class="carousel-slide" data-full="assets/img/myceland/myceland_tree.png" data-alt="Myceland — Tree">
-                  <img src="assets/img/myceland/myceland_tree.png" alt="Myceland — Tree" loading="lazy" />
+                <div class="carousel-slide" data-full="assets/img/slip_away/slip_away_7.png" data-alt="Slip Away — Full board bloom on level completion">
+                  <img src="assets/img/slip_away/slip_away_7.png" alt="Slip Away — Full board bloom on level completion" loading="lazy" />
                 </div>
-                <div class="carousel-slide" data-full="assets/img/myceland/myceland_level_1.jpg" data-alt="Myceland — Level 1">
-                  <img src="assets/img/myceland/myceland_level_1.jpg" alt="Myceland — Level 1" loading="lazy" />
+                <div class="carousel-slide" data-full="assets/img/slip_away/slip_away_8.png" data-alt="Slip Away — Cascading Hills, a revived region of the overworld">
+                  <img src="assets/img/slip_away/slip_away_8.png" alt="Slip Away — Cascading Hills, a revived region of the overworld" loading="lazy" />
                 </div>
-                <div class="carousel-slide" data-full="assets/img/myceland/myceland_level_2.jpg" data-alt="Myceland — Level 2">
-                  <img src="assets/img/myceland/myceland_level_2.jpg" alt="Myceland — Level 2" loading="lazy" />
+                <div class="carousel-slide" data-full="assets/img/slip_away/slip_away_slip.png" data-alt="Slip Away — Slip">
+                  <img src="assets/img/slip_away/slip_away_slip.png" alt="Slip Away — Slip" loading="lazy" />
                 </div>
-                <div class="carousel-slide" data-full="assets/img/myceland/myceland_propagation_1.gif" data-alt="Myceland — Propagation 1">
-                  <img src="assets/img/myceland/myceland_propagation_1.gif" alt="Myceland — Propagation 1" loading="lazy" />
+                <div class="carousel-slide" data-full="assets/img/slip_away/slip_away_slip.jpg" data-alt="Slip Away — Slip">
+                  <img src="assets/img/slip_away/slip_away_slip.jpg" alt="Slip Away — Slip" loading="lazy" />
                 </div>
-                <div class="carousel-slide" data-full="assets/img/myceland/myceland_propagation_2.gif" data-alt="Myceland — Propagation 2">
-                  <img src="assets/img/myceland/myceland_propagation_2.gif" alt="Myceland — Propagation 2" loading="lazy" />
+                <div class="carousel-slide" data-full="assets/img/slip_away/slip_away_corrupted.jpg" data-alt="Slip Away — Corrupted">
+                  <img src="assets/img/slip_away/slip_away_corrupted.jpg" alt="Slip Away — Corrupted" loading="lazy" />
+                </div>
+                <div class="carousel-slide" data-full="assets/img/slip_away/slip_away_revived.jpg" data-alt="Slip Away — Revived">
+                  <img src="assets/img/slip_away/slip_away_revived.jpg" alt="Slip Away — Revived" loading="lazy" />
+                </div>
+                <div class="carousel-slide" data-full="assets/img/slip_away/slip_away_grass.png" data-alt="Slip Away — Grass">
+                  <img src="assets/img/slip_away/slip_away_grass.png" alt="Slip Away — Grass" loading="lazy" />
+                </div>
+                <div class="carousel-slide" data-full="assets/img/slip_away/slip_away_fog.png" data-alt="Slip Away — Fog">
+                  <img src="assets/img/slip_away/slip_away_fog.png" alt="Slip Away — Fog" loading="lazy" />
+                </div>
+                <div class="carousel-slide" data-full="assets/img/slip_away/slip_away_tree.png" data-alt="Slip Away — Tree">
+                  <img src="assets/img/slip_away/slip_away_tree.png" alt="Slip Away — Tree" loading="lazy" />
+                </div>
+                <div class="carousel-slide" data-full="assets/img/slip_away/slip_away_level_1.jpg" data-alt="Slip Away — Level 1">
+                  <img src="assets/img/slip_away/slip_away_level_1.jpg" alt="Slip Away — Level 1" loading="lazy" />
+                </div>
+                <div class="carousel-slide" data-full="assets/img/slip_away/slip_away_level_2.jpg" data-alt="Slip Away — Level 2">
+                  <img src="assets/img/slip_away/slip_away_level_2.jpg" alt="Slip Away — Level 2" loading="lazy" />
+                </div>
+                <div class="carousel-slide" data-full="assets/img/slip_away/slip_away_propagation_1.gif" data-alt="Slip Away — Propagation 1">
+                  <img src="assets/img/slip_away/slip_away_propagation_1.gif" alt="Slip Away — Propagation 1" loading="lazy" />
+                </div>
+                <div class="carousel-slide" data-full="assets/img/slip_away/slip_away_propagation_2.gif" data-alt="Slip Away — Propagation 2">
+                  <img src="assets/img/slip_away/slip_away_propagation_2.gif" alt="Slip Away — Propagation 2" loading="lazy" />
                 </div>
               </div>
             </div>
@@ -276,7 +327,7 @@
               <button class="carousel-nav" id="nextBtn" onclick="changeSlide(1)">Next →</button>
             </div>
             <div style="text-align: center; margin-top: 12px;">
-              <span class="carousel-counter"><span id="currentSlide">1</span> / <span id="totalSlides">11</span></span>
+              <span class="carousel-counter"><span id="currentSlide">1</span> / <span id="totalSlides">19</span></span>
             </div>
           </div>
         </div>
@@ -288,16 +339,17 @@
         <div class="col-meta reveal">/ 03 — VIDEOS</div>
         <div class="reveal">
           <h2>See it in motion.</h2>
-          <p style="color: var(--text-dim); font-family: var(--font-mono); font-size: 12px; margin-top: 12px; letter-spacing: 0.08em;">
-            // Videos coming soon — check back later or follow the GitHub for updates.
-          </p>
+          <div class="video-label">// Gameplay demo</div>
+          <div class="video-embed">
+            <iframe src="https://www.youtube.com/embed/yusHqW1oZCs" title="Slip Away — Gameplay demo" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </div>
         </div>
       </div>
     </section>
 
     <section class="game-body">
       <div class="shell grid">
-        <div class="col-meta reveal">/ 05 — ARCHITECTURE</div>
+        <div class="col-meta reveal">/ 04 — ARCHITECTURE</div>
         <div class="reveal">
           <h2>How it's built.</h2>
 
@@ -311,9 +363,9 @@
           </p>
 
           <div class="gallery-item reveal" style="margin-top: 20px; background: #f8f8f8;"
-               data-full="assets/img/myceland/myceland_grid_creation.gif" data-alt="Myceland — Grid creation in editor">
-            <img src="assets/img/myceland/myceland_grid_creation.gif"
-                 alt="Myceland — Grid creation in editor" loading="lazy"
+               data-full="assets/img/slip_away/slip_away_grid_creation.gif" data-alt="Slip Away — Grid creation in editor">
+            <img src="assets/img/slip_away/slip_away_grid_creation.gif"
+                 alt="Slip Away — Grid creation in editor" loading="lazy"
                  style="width:100%; height:auto; display:block;" />
           </div>
           <p style="font-family: var(--font-mono); font-size: 11px; color: var(--text-faint); margin-top: 8px; letter-spacing: 0.08em;">
@@ -340,9 +392,9 @@
 
           <!-- Tech diagram -->
           <div class="gallery-item reveal" style="margin-top: 20px; background: #f8f8f8;"
-               data-full="assets/img/myceland/myceland_tech_1.jpg" data-alt="Myceland — Game loop and propagation diagrams">
-            <img src="assets/img/myceland/myceland_tech_1.jpg"
-                 alt="Myceland — Game loop and propagation diagrams" loading="lazy"
+               data-full="assets/img/slip_away/slip_away_tech_1.jpg" data-alt="Slip Away — Game loop and propagation diagrams">
+            <img src="assets/img/slip_away/slip_away_tech_1.jpg"
+                 alt="Slip Away — Game loop and propagation diagrams" loading="lazy"
                  style="width:100%; height:auto; display:block;" />
           </div>
           <p style="font-family: var(--font-mono); font-size: 11px; color: var(--text-faint); margin-top: 8px; letter-spacing: 0.08em;">
@@ -366,7 +418,7 @@
 
     <section class="game-body">
       <div class="shell grid">
-        <div class="col-meta reveal">/ 06 — TECH HIGHLIGHTS</div>
+        <div class="col-meta reveal">/ 05 — TECH HIGHLIGHTS</div>
         <div>
           <h2 class="reveal">Under the hood.</h2>
           <ul class="tech-list reveal">
@@ -388,15 +440,15 @@
         <div class="links-block">
           <span style="pointer-events:none; opacity:0.4; cursor:default;">
             <div class="k">PLAY — COMING SOON</div>
-            <div class="v">itch.io / myceland</div>
+            <div class="v">itch.io / slip-away</div>
           </span>
-          <a href="https://github.com/Al3xics/Myceland" target="_blank" rel="noopener">
+          <a href="https://github.com/Al3xics/SlipAway" target="_blank" rel="noopener">
             <div class="k">↗ SOURCE</div>
-            <div class="v">github.com / Al3xics / Myceland</div>
+            <div class="v">github.com / Al3xics / SlipAway</div>
           </a>
-          <a href="#trailers">
+          <a href="https://youtu.be/yusHqW1oZCs" target="_blank" rel="noopener">
             <div class="k">↗ VIDEO</div>
-            <div class="v">Coming soon</div>
+            <div class="v">YouTube demo</div>
           </a>
         </div>
         <div class="next-prev">
@@ -419,7 +471,7 @@
           <div class="wip-icon">⚙</div>
           <div class="wip-text">
             <h3>Work in progress</h3>
-            <p>Myceland is still in active development. More levels, mechanics, and narrative content are being added. Check the GitHub repository for the latest updates.</p>
+            <p>Slip Away is still in active development. More levels, mechanics, and narrative content are being added. Check the GitHub repository for the latest updates.</p>
           </div>
           <div class="wip-badge"><span class="dot"></span> In development</div>
         </div>

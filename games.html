@@ -3,6 +3,11 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" href="favicon.ico" sizes="any" />
+  <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-32.png" />
+  <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png" />
+  <meta name="theme-color" content="#09090B" />
   <title>Games — Alexis Martinho</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -94,17 +99,19 @@
     .game-row .left.bg-gollum   { background: #0d1a0d; } /* dark green-black  */
     .game-row .left.bg-onryo    { background: #1a0f0f; } /* rich red-black  */
     .game-row .left.bg-wendogo  { background: #0a0f1a; } /* deeper blue-black  */
-    .game-row .left.bg-myceland { background: #0f1a0f; } /* dark green-brown  */
+    .game-row .left.bg-slipaway { background: #0f1a0f; } /* dark green-brown  */
 
-    .motif-myceland .wip {
+    .motif-slipaway .wip {
       position: absolute; bottom: 12px; right: 12px;
       font-family: var(--font-mono); font-size: 10px;
       color: var(--warn); letter-spacing: 0.12em;
       padding: 3px 8px;
       border: 1px solid rgba(212, 162, 76, 0.4);
-      background: rgba(212, 162, 76, 0.08);
+      /* opaque: the badge overlaps the logo's corner, and a see-through
+         ground made it read as if it were sitting behind the artwork */
+      background: #10160f;
       border-radius: 100px;
-      z-index: 2;
+      z-index: 3; /* above the logo, which sits at 2 */
     }
   </style>
 </head>
@@ -192,17 +199,17 @@
             </div>
           </a>
 
-          <a class="game-row reveal" href="game-myceland.html">
-            <div class="left bg-myceland motif-myceland">
+          <a class="game-row reveal" href="game-slip-away.html">
+            <div class="left bg-slipaway motif-slipaway">
               <span class="motif-label">// 04</span>
-              <img class="logo" src="assets/img/myceland/myceland_logo.png" alt="Myceland logo" />
+              <img class="logo" src="assets/img/slip_away/slip_away_logo.png" alt="Slip Away logo" />
               <div class="wip">WORK IN PROGRESS</div>
             </div>
             <div class="right">
               <div class="idx">04 / PUZZLE NARRATIVE</div>
-              <h3>Myceland</h3>
+              <h3>Slip Away</h3>
               <div class="meta">Unreal Engine 5 · C++ · PC · In development</div>
-              <p>Incarnate an avatar of a destroyed world. Revive the land by planting mushrooms and solving puzzles, woven into a narrative arc across levels.</p>
+              <p>Incarnate an avatar of a destroyed world. Revive the land by planting spores and solving puzzles, woven into a narrative arc across levels.</p>
               <div class="foot">
                 <div class="badges">
                   <span class="badge accent">UE5</span>
