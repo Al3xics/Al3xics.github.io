@@ -201,6 +201,20 @@
     .source-note a { color: var(--accent); text-decoration: none; }
     .source-note a:hover { text-decoration: underline; }
 
+    /* Video embed */
+    .video-embed {
+      position: relative;
+      width: 100%;
+      padding-bottom: 56.25%;
+      height: 0;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      margin-top: 8px;
+    }
+    .video-embed iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+    .video-label { font-family: var(--font-mono); font-size: 11px; color: var(--text-dim); letter-spacing: 0.1em; margin-bottom: 8px; margin-top: 32px; text-transform: uppercase; }
+
     /* Lightbox */
     .lightbox { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.92); z-index: 1000; align-items: center; justify-content: center; }
     .lightbox.active { display: flex; }
@@ -231,11 +245,11 @@
         <div class="eyebrow reveal" style="margin-bottom: 20px"><span class="idx">/</span> 005 — ALTERNANCE</div>
         <h1 class="reveal">Two years as the<br><em>UE5 lead</em> on an international team.</h1>
         <p class="lede reveal">
-          A 2-year alternance, alternating between school and professional
-          work inside Aumovio's 3D Real-Time team — an international team
-          spread across Germany, France and the USA, reporting to a German
-          project manager. I'm the Unreal Engine 5 reference for the team:
-          owning the engine, merging PRs and onboarding teammates who are
+          A 2-year alternance (work-study), alternating between school and
+          professional work inside Aumovio's 3D Real-Time team — an international
+          team spread across Germany, France and the USA, reporting to a German
+          project manager. I was the Unreal Engine 5 reference for the team:
+          owning the engine, merging PRs and onboarding teammates who were
           still ramping up on Unreal. Across two missions — a real-time
           in-cabin simulation &amp; synthetic-data-generation tool, and an
           Apple Vision Pro XR port.
@@ -246,7 +260,7 @@
             <div class="name">Aumovio <span class="dim" style="font-weight: 400; font-size: 14px;">(formerly part of Continental)</span></div>
             <div class="sub">Unreal Engine 5 Developer · Gameplay Programmer · 3D Real-Time Team · Rambouillet · Jan 2025 – Sep 2026</div>
           </div>
-          <span class="status"><span class="pulse"></span> Active · Y2</span>
+          <span class="status">✓ Completed · Sep 2026</span>
         </div>
       </div>
     </section>
@@ -263,7 +277,7 @@
           <div class="reveal">
             <h2 style="font-size: 26px;">In-cabin simulation &amp; synthetic dataset generation.</h2>
             <p>
-              I build a real-time vehicle-interior (in-cabin) simulation tool in
+              I built a real-time vehicle-interior (in-cabin) simulation tool in
               Unreal Engine 5. It configures <span class="hi">MetaHuman</span> avatars —
               clothing, hair, blend shapes and animations — inside virtual cabin
               environments, with controllable lighting and accident / distraction scenarios.
@@ -276,8 +290,8 @@
               in-cabin cameras.
             </p>
             <p>
-              I work cross-functionally with the AI, data-analysis and sensor teams to make
-              sure the generated data fits what the models actually need.
+              I worked cross-functionally with the AI, data-analysis and sensor teams to make
+              sure the generated data fit what the models actually needed.
             </p>
             <div class="badges" style="margin-top: 20px;">
               <span class="badge accent">UE5</span>
@@ -329,6 +343,13 @@
             </div>
           </div>
         </div>
+
+        <div class="reveal">
+          <div class="video-label">// Tool presentation — synthetic data generation (SDG2)</div>
+          <div class="video-embed">
+            <iframe src="https://www.youtube.com/embed/lX3eb0DGfrI" title="Aumovio — SDG2 in-cabin simulation tool presentation" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -345,7 +366,7 @@
             The synthetic datasets my tool renders are used to train cabin-sensing
             models — driver and occupant monitoring, distraction and drowsiness
             detection, well-being functions. Below are visuals from Aumovio's
-            Cabin Sensing product page; I build the UE5 tool that generates the
+            Cabin Sensing product page; I built the UE5 tool that generates the
             training data behind systems like these.
           </p>
 
@@ -373,7 +394,7 @@
           <div class="source-note">
             ↗ Product page:
             <a href="https://www.aumovio.com/en/solutions/software-defined-mobility/software-solutions/cabin-sensing.html" target="_blank" rel="noopener">aumovio.com — Cabin Sensing</a>
-            <span style="color: var(--text-faint);">— visuals © Aumovio. I develop the new UE5 simulation &amp; synthetic-data tool that feeds models like these.</span>
+            <span style="color: var(--text-faint);">— visuals © Aumovio. I developed the new UE5 simulation &amp; synthetic-data tool that feeds models like these.</span>
           </div>
         </div>
       </div>
@@ -395,7 +416,7 @@
               an interactive Meta Quest XR app to <span class="hi">Apple Vision Pro</span>
               using Unity &amp; PolySpatial in Hybrid mode — a real-time, interactive
               vehicle-interior customisation experience. I then moved onto the in-cabin
-              simulation tool, where I've spent the rest of my time.
+              simulation tool, where I spent the rest of my time.
             </p>
             <p>
               visionOS / PolySpatial is young, so much of the work was solving novel platform
@@ -421,14 +442,14 @@
         <div class="section-head reveal">
           <div class="num">/04</div>
           <h2>Highlights</h2>
-          <div class="meta">what I own</div>
+          <div class="meta">what I owned</div>
         </div>
 
         <div class="highlights">
           <div class="highlight reveal">
             <div class="n">▸ 01 / OWNERSHIP</div>
             <h3>UE5 reference for the team.</h3>
-            <p>Technical lead on Unreal for a team of 4 (1 dev, 1 designer, 1 3D artist, 1 intern) — reviewing and merging PRs, owning engine decisions and onboarding teammates still ramping up on UE5.</p>
+            <p>Technical lead on Unreal for a team of 4 (1 dev, 1 designer, 1 3D artist, 1 intern) — reviewing and merging PRs, owning engine decisions and onboarding teammates who were still ramping up on UE5.</p>
           </div>
           <div class="highlight reveal">
             <div class="n">▸ 02 / R&amp;D</div>
@@ -497,10 +518,17 @@
             </div>
           </div>
           <div class="tl-entry reveal">
-            <div class="when">Y2 → ONGOING</div>
+            <div class="when">Y2</div>
             <div class="tl-card">
               <h3>Internal dataset tool in use</h3>
               <p>The team picked up the simulation tool and started generating synthetic datasets for internal use, with full Confluence documentation delivered.</p>
+            </div>
+          </div>
+          <div class="tl-entry reveal">
+            <div class="when">SEP 2026 · END</div>
+            <div class="tl-card">
+              <h3>Work-study completed</h3>
+              <p>Wrapped up the alternance and graduated with a Master's in Game Programming (ICAN Paris), handing the tool and its documentation over to the team.</p>
             </div>
           </div>
         </div>
@@ -512,10 +540,11 @@
         <div class="card reveal" style="padding: 40px; display: flex; justify-content: space-between; gap: 24px; flex-wrap: wrap; align-items: center;">
           <div>
             <div class="eyebrow" style="margin-bottom: 12px;"><span class="idx">/</span> WHAT'S NEXT</div>
-            <h3 style="font-size: 24px;">Available from October 2026 — open to what's next.</h3>
+            <h3 style="font-size: 24px;">Available immediately — open to what's next.</h3>
           </div>
           <div style="display: flex; gap: 12px; flex-wrap: wrap;">
             <a class="btn btn-primary" href="contact.html">Get in touch <span class="arrow">→</span></a>
+            <a class="btn btn-ghost" href="assets/cv/CV_MARTINHO_Alexis_EN.pdf" download>Download CV <span class="arrow">↓</span></a>
             <a class="btn btn-ghost" href="games.html">See the games ↗</a>
           </div>
         </div>

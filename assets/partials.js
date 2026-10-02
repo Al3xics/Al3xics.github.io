@@ -9,6 +9,7 @@
     ['alternance.html', 'Alternance'],
     ['contact.html', 'Contact']
   ];
+  const CV_URL = 'assets/cv/CV_MARTINHO_Alexis_EN.pdf';
 
   function topbar() {
     return `
@@ -24,6 +25,7 @@
           </button>
           <nav class="nav" id="mainNav">
             ${NAV.map(([h, l]) => `<a href="${h}">${l}</a>`).join('')}
+            <a class="nav-cv" href="${CV_URL}" download>CV ↓</a>
           </nav>
         </div>
       </header>
@@ -42,6 +44,7 @@
             </div>
             <div class="links">
               <a href="contact.html">→ Contact</a>
+              <a href="${CV_URL}" download>→ Download CV</a>
               <a href="https://www.linkedin.com/in/alexis-martinho-76265125b/" target="_blank" rel="noopener">→ LinkedIn</a>
               <a href="https://github.com/Al3xics" target="_blank" rel="noopener">→ GitHub</a>
               <a href="https://al3xics.itch.io/" target="_blank" rel="noopener">→ itch.io</a>
